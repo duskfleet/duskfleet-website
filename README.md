@@ -33,6 +33,21 @@ src/
 
 `.github/workflows/deploy.yml` builds on every push to `main` and publishes to GitHub Pages.
 `SITE` and `BASE` are taken from the Pages settings of the repo, so the same workflow works for
-an org page (`duskfleet.github.io`, base `/`) and for a project page (base `/<repo>`).
+a custom domain (base `/`) and for a project page (base `/<repo>`).
 
 Enable it once in the repo: Settings → Pages → Source: **GitHub Actions**.
+
+### Custom domain
+
+The site is served at **https://duskfleet.com**. `public/CNAME` carries the domain, so every deploy
+keeps it set in the Pages settings. DNS at the registrar:
+
+```
+A      @     185.199.108.153
+A      @     185.199.109.153
+A      @     185.199.110.153
+A      @     185.199.111.153
+CNAME  www   duskfleet.github.io
+```
+
+Once the DNS check in Settings → Pages passes, turn on **Enforce HTTPS**.
