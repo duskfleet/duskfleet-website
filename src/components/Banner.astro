@@ -1,0 +1,38 @@
+---
+import { site } from '../data/site';
+---
+
+<div class="banner">
+  <p>
+    <span>Open source, MIT, local-first. Formerly Gab Factory.</span>
+    <a href={site.links.releases} target="_blank" rel="noopener">See what changed</a>
+  </p>
+</div>
+
+<style>
+  .banner {
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    padding: 8px var(--gutter);
+    text-align: center;
+    font-size: 13px;
+    line-height: 19.5px;
+    color: var(--muted);
+  }
+
+  .banner p {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2px 6px;
+  }
+
+  .banner a {
+    color: var(--sunset-amber);
+    font-weight: 500;
+  }
+
+  .banner a:hover {
+    text-decoration: underline;
+  }
+</style>

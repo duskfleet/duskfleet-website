@@ -1,0 +1,89 @@
+---
+import { costRows, costTotal } from '../data/site';
+---
+
+<section class="section">
+  <div class="container split">
+    <div class="split__copy">
+      <p class="eyebrow">Cost</p>
+      <h2 class="h2">Know what every run costs.</h2>
+      <p class="lead">
+        The CLI reports cost per run; DuskFleet keeps it. Compare models on the same agent, cap a
+        budget per agent, and see the last 24 hours before the invoice does.
+      </p>
+    </div>
+
+    <div class="table panel cost" role="table" aria-label="Cost per model, last 24 hours">
+      <div class="table__head cost__grid" role="row">
+        <span role="columnheader">Model</span>
+        <span role="columnheader" class="num">Runs</span>
+        <span role="columnheader" class="num">Avg cost</span>
+        <span role="columnheader" class="num">Total</span>
+      </div>
+      {
+        costRows.map((r) => (
+          <div class="table__row cost__grid" role="row">
+            <span role="cell" class="mono">{r.model}</span>
+            <span role="cell" class="num">{r.runs}</span>
+            <span role="cell" class="num">{r.avg}</span>
+            <span role="cell" class="num">{r.total}</span>
+          </div>
+        ))
+      }
+      <div class="table__row cost__grid cost__total" role="row">
+        <span role="cell" class="mono">{costTotal.model}</span>
+        <span role="cell" class="num">{costTotal.runs}</span>
+        <span role="cell" class="num"></span>
+        <span role="cell" class="num">{costTotal.total}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 495px) minmax(0, 577px);
+    justify-content: space-between;
+    align-items: start;
+    gap: 48px;
+  }
+
+  .split__copy {
+    padding-top: 27px;
+  }
+
+  .cost__grid {
+    grid-template-columns: minmax(0, 1fr) 70px 110px 100px;
+    column-gap: 12px;
+  }
+
+  .cost .table__row {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  .cost__total {
+    color: var(--sunset-amber);
+    font-weight: 500;
+  }
+
+  @media (max-width: 1024px) {
+    .split {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .split__copy {
+      padding-top: 0;
+      max-width: 560px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .cost__grid {
+      grid-template-columns: minmax(0, 1fr) 48px 70px 70px;
+      column-gap: 8px;
+    }
+  }
+</style>

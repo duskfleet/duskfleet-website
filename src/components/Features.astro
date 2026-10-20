@@ -1,0 +1,122 @@
+---
+import iconMarkdown from '../assets/icons/feat-markdown.svg?raw';
+import iconUnattended from '../assets/icons/feat-unattended.svg?raw';
+import iconSchedules from '../assets/icons/feat-schedules.svg?raw';
+import iconRecorded from '../assets/icons/feat-recorded.svg?raw';
+import iconCost from '../assets/icons/feat-cost.svg?raw';
+import iconChat from '../assets/icons/feat-chat.svg?raw';
+---
+
+<section id="features" class="section section--alt">
+  <div class="container">
+    <div class="intro">
+      <p class="eyebrow">Features</p>
+      <h2 class="h2">Everything an unattended run needs. Nothing it doesn't.</h2>
+    </div>
+
+    <ul class="grid">
+      <li class="card panel">
+        <span class="card__icon" set:html={iconMarkdown} />
+        <h3 class="card__title">Agents are Markdown</h3>
+        <p class="card__text">
+          A persona you write here, or a link to the agent your repo already keeps in
+          <code>.claude/agents</code>. Versioned, diffable, portable.
+        </p>
+      </li>
+      <li class="card panel">
+        <span class="card__icon" set:html={iconUnattended} />
+        <h3 class="card__title">Unattended by design</h3>
+        <p class="card__text">
+          No permission prompts, ever. Each agent carries its own allow-list and extra directories.
+          Anything outside it is denied and recorded.
+        </p>
+      </li>
+      <li class="card panel">
+        <span class="card__icon" set:html={iconSchedules} />
+        <h3 class="card__title">Schedules that skip, never queue</h3>
+        <p class="card__text">
+          Plain cron, DST-safe, no dependency. If the agent is busy the tick is marked skipped. No
+          catch-up storms when the laptop wakes.
+        </p>
+      </li>
+      <li class="card panel">
+        <span class="card__icon" set:html={iconRecorded} />
+        <h3 class="card__title">Every run recorded</h3>
+        <p class="card__text">
+          Tool calls, denials, turns, tokens, cost, exit reason. One SQLite file and one JSONL log
+          per run. Resume any session with one command.
+        </p>
+      </li>
+      <li class="card panel">
+        <span class="card__icon" set:html={iconCost} />
+        <h3 class="card__title">Cost you can see</h3>
+        <p class="card__text">
+          Per run, per agent, per model, last 24 hours. A budget cap per agent. Pin
+          <code>haiku</code> while you experiment.
+        </p>
+      </li>
+      <li class="card panel">
+        <span class="card__icon" set:html={iconChat} />
+        <h3 class="card__title">Chat is the control room</h3>
+        <p class="card__text">
+          15 MCP tools. Create agents, start runs, set schedules and ask what happened from Claude
+          Desktop, Cowork or Claude Code.
+        </p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .intro {
+    max-width: 640px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 40px 0 0;
+  }
+
+  .card {
+    padding: 24px;
+  }
+
+  .card__icon :global(svg) {
+    width: 28px;
+    height: 28px;
+  }
+
+  .card__title {
+    margin-top: 14px;
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .card__text {
+    margin-top: 10px;
+    font-size: 15px;
+    line-height: 22.5px;
+    color: var(--muted);
+  }
+
+  .card__text code {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

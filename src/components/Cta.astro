@@ -1,0 +1,76 @@
+---
+import markLarge from '../assets/icons/mark-large.svg?raw';
+import { site } from '../data/site';
+---
+
+<section id="start" class="section cta">
+  <div class="container cta__inner">
+    <span class="cta__mark" set:html={markLarge} />
+    <h2 class="cta__title">Launch a fleet in four commands.</h2>
+    <pre class="code cta__code"><code><span class="dim">$</span> git clone https://github.com/duskfleet/duskfleet.git
+<span class="dim">$</span> cd duskfleet &amp;&amp; npm install &amp;&amp; npm run build
+<span class="dim">$</span> npm run cli -- doctor
+<span class="dim">$</span> npm run web   <span class="dim"># dashboard on localhost:4777</span></code></pre>
+    <div class="cta__actions">
+      <a href={site.repo} class="btn btn--primary" target="_blank" rel="noopener">Star on GitHub</a>
+      <a href={site.links.docs} class="btn btn--ghost" target="_blank" rel="noopener">Read the docs</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    background: linear-gradient(180deg, #0e1020 0%, #1a1430 100%);
+    padding-block: 96px;
+  }
+
+  .cta__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .cta__mark :global(svg) {
+    width: 96px;
+    height: 96px;
+  }
+
+  .cta__title {
+    margin-top: 24px;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 46px;
+    letter-spacing: -0.025em;
+  }
+
+  .cta__code {
+    width: 100%;
+    max-width: 640px;
+    margin-top: 24px;
+    padding: 20px;
+    font-size: 14px;
+    line-height: 22.5px;
+    text-align: left;
+    border-radius: 12px;
+  }
+
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  @media (max-width: 640px) {
+    .cta {
+      padding-block: 64px;
+    }
+
+    .cta__title {
+      font-size: 32px;
+      line-height: 36px;
+    }
+  }
+</style>

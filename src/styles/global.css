@@ -1,0 +1,189 @@
+/* Shared layout primitives used across sections. */
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  border-top: 1px solid var(--border);
+  padding-block: var(--section-pad);
+  scroll-margin-top: 72px;
+}
+
+.section--alt {
+  background: var(--bg-alt);
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  line-height: 1.5;
+}
+
+.h2 {
+  font-size: 40px;
+  line-height: 44px;
+  letter-spacing: -0.02em;
+  margin-top: 12px;
+}
+
+.lead {
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin-top: 16px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  padding-inline: 22px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  white-space: nowrap;
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease, background-color 120ms ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn--primary {
+  background: var(--gradient-cta);
+  color: var(--bg);
+  font-weight: 600;
+  border: 0;
+}
+
+.btn--primary:hover {
+  box-shadow: 0 8px 24px rgba(240, 120, 58, 0.35);
+}
+
+.btn--ghost {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn--ghost:hover {
+  border-color: var(--faint);
+  background: var(--panel-2);
+}
+
+/* Status pill */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 11px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  white-space: nowrap;
+  color: var(--pill);
+  background: color-mix(in srgb, var(--pill) 14%, transparent);
+}
+
+.pill::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--pill);
+}
+
+.pill--running { --pill: var(--run); }
+.pill--review { --pill: var(--sunset-amber); }
+.pill--completed { --pill: var(--ok); }
+.pill--failed { --pill: var(--sunset-coral); }
+
+/* Code blocks */
+.code {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 13px 14px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 19.5px;
+  color: var(--text);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.code .dim {
+  color: var(--faint);
+}
+
+.code .mid {
+  color: var(--muted);
+}
+
+/* Table-ish panels */
+.table {
+  overflow: hidden;
+}
+
+.table__head {
+  display: grid;
+  align-items: center;
+  background: var(--panel-2);
+  height: 36px;
+  padding-inline: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.table__row {
+  display: grid;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding: 12px 16px;
+}
+
+.num {
+  text-align: right;
+  font-family: var(--font-mono);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  .h2 {
+    font-size: 32px;
+    line-height: 36px;
+  }
+}

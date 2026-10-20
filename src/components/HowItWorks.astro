@@ -1,0 +1,146 @@
+---
+---
+
+<section id="how" class="section">
+  <div class="container">
+    <div class="intro">
+      <p class="eyebrow">How it works</p>
+      <h2 class="h2">Describe the agent. Point it at a project. Read the log.</h2>
+      <p class="lead">
+        You write what should happen in two Markdown and YAML files. DuskFleet runs it and writes
+        down what happened.
+      </p>
+    </div>
+
+    <ol class="steps">
+      <li class="step panel">
+        <span class="step__n">01</span>
+        <h3 class="step__title">Write an agent.</h3>
+        <p class="step__text">
+          A Markdown file with YAML frontmatter: model, permission mode, allowed tools, budget. Or
+          link an agent your project already defines.
+        </p>
+        <pre class="code"><code>---
+id: test-fixer
+model: sonnet
+permission_mode: acceptEdits
+allowed_tools: [Bash(npm test:*)]
+max_budget_usd: 1
+---
+Fix failing tests. Never skip one.</code></pre>
+      </li>
+
+      <li class="step panel">
+        <span class="step__n">02</span>
+        <h3 class="step__title">Launch from chat, CLI or cron.</h3>
+        <p class="step__text">
+          Ask Claude Desktop over MCP, type a command, or set a 5-field cron. A busy agent is
+          skipped, never queued.
+        </p>
+        <pre class="code"><code><span class="dim">$</span> duskfleet run \
+    --project app --agent test-fixer \
+    --model haiku -- "Fix the failing test"
+
+<span class="dim">#</span> or, in Claude Desktop:
+<span class="mid">"run test-fixer on app every night at 2"</span></code></pre>
+      </li>
+
+      <li class="step panel">
+        <span class="step__n">03</span>
+        <h3 class="step__title">Read what happened.</h3>
+        <p class="step__text">
+          Every event lands in SQLite and a JSONL log. The dashboard shows the timeline, the result,
+          the cost, and resumes the session with one command.
+        </p>
+        <div class="code log">
+          <div class="log__row"><span class="dim">00:00</span><span>Read package.json</span></div>
+          <div class="log__row"><span class="dim">00:04</span><span>Bash npm test</span></div>
+          <div class="log__row"><span class="dim">00:41</span><span>Edit src/cron.ts</span></div>
+          <div class="log__row"><span class="dim">01:02</span><span class="log__amber">Bash git push · denied</span></div>
+          <div class="log__row"><span class="dim">01:03</span><span class="log__ok">result · $0.11 · 6 turns</span></div>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<style>
+  .intro {
+    max-width: 640px;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 40px 0 0;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+  }
+
+  .step__n {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 19.5px;
+    color: var(--sunset-amber);
+  }
+
+  .step__title {
+    margin-top: 14px;
+    font-size: 22px;
+    line-height: 33px;
+  }
+
+  .step__text {
+    margin-top: 14px;
+    font-size: 15px;
+    line-height: 22.5px;
+    color: var(--muted);
+  }
+
+  .step .code {
+    margin-top: 14px;
+    overflow: hidden;
+  }
+
+  .log {
+    display: flex;
+    flex-direction: column;
+    gap: 7.5px;
+    padding: 12px 14px 13px;
+    line-height: 19px;
+  }
+
+  .log__row {
+    display: flex;
+    gap: 10px;
+    white-space: nowrap;
+  }
+
+  .log__row .dim {
+    width: 52px;
+    flex: none;
+  }
+
+  .log__amber {
+    color: var(--sunset-amber);
+  }
+
+  .log__ok {
+    color: var(--ok);
+  }
+
+  @media (max-width: 1024px) {
+    .steps {
+      grid-template-columns: minmax(0, 1fr);
+      max-width: 560px;
+    }
+  }
+</style>

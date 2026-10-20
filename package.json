@@ -1,0 +1,26 @@
+{
+  "name": "duskfleet-website",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Landing page for DuskFleet: orchestrate, observe and schedule autonomous Claude Code agents on your own machine.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@fontsource-variable/outfit": "^5.2.6",
+    "@fontsource/ibm-plex-mono": "^5.2.6",
+    "@fontsource/ibm-plex-sans": "^5.2.6",
+    "astro": "^5.14.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@types/node": "^24.19.2",
+    "typescript": "^5.9.3"
+  }
+}

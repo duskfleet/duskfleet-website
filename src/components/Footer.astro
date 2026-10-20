@@ -1,0 +1,114 @@
+---
+import { footerColumns } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <span class="footer__logo"><span>dusk</span><span class="footer__accent">fleet</span></span>
+      <p class="footer__tagline">
+        Orchestrate, observe and schedule autonomous Claude Code agents on your own machine.
+      </p>
+      <p class="footer__copy">© {year} DuskFleet. Open source, MIT license.</p>
+    </div>
+
+    <nav class="footer__cols" aria-label="Footer">
+      {
+        footerColumns.map((col) => (
+          <div class="footer__col">
+            <span class="footer__heading">{col.title}</span>
+            <ul>
+              {col.links.map((l) => (
+                <li>
+                  <a href={l.href} target={l.external ? '_blank' : undefined} rel={l.external ? 'noopener' : undefined}>
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--border);
+    padding-block: 40px;
+    background: var(--bg);
+  }
+
+  .footer__inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .footer__brand {
+    max-width: 320px;
+  }
+
+  .footer__logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: -0.02em;
+  }
+
+  .footer__accent {
+    color: var(--accent);
+  }
+
+  .footer__tagline {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--muted);
+  }
+
+  .footer__copy {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 19.5px;
+    color: var(--faint);
+  }
+
+  .footer__cols {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .footer__heading {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 21px;
+  }
+
+  .footer__col ul {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer__col a {
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--muted);
+    transition: color 120ms ease;
+  }
+
+  .footer__col a:hover {
+    color: var(--text);
+  }
+</style>

@@ -1,0 +1,116 @@
+---
+import mark from '../assets/icons/mark.svg?raw';
+import { nav } from '../data/site';
+---
+
+<header class="header">
+  <div class="container header__inner">
+    <a href="#top" class="logo" aria-label="DuskFleet, back to top">
+      <span class="logo__mark" set:html={mark} />
+      <span class="logo__word"><span>dusk</span><span class="logo__accent">fleet</span></span>
+    </a>
+    <nav class="nav" aria-label="Site">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class="nav__link"
+            target={item.external ? '_blank' : undefined}
+            rel={item.external ? 'noopener' : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <a href="#start" class="nav__cta">Install</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 76px;
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 16px;
+  }
+
+  .logo__mark :global(svg) {
+    width: 36px;
+    height: 36px;
+  }
+
+  .logo__word {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    line-height: 33px;
+  }
+
+  .logo__accent {
+    color: var(--accent);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .nav__link {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 15px;
+    line-height: 22.5px;
+    color: var(--muted);
+    transition: color 120ms ease, background-color 120ms ease;
+  }
+
+  .nav__link:hover {
+    color: var(--text);
+    background: var(--panel);
+  }
+
+  .nav__cta {
+    margin-left: 8px;
+    padding: 9px 16px;
+    border-radius: 9px;
+    background: var(--sunset-amber);
+    color: var(--bg);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 22.5px;
+    transition: filter 120ms ease;
+  }
+
+  .nav__cta:hover {
+    filter: brightness(1.06);
+  }
+
+  @media (max-width: 640px) {
+    .logo {
+      margin-left: 0;
+    }
+
+    .nav__link {
+      display: none;
+    }
+  }
+</style>

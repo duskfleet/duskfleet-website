@@ -1,0 +1,109 @@
+---
+import StatusPill from './StatusPill.astro';
+import { verdicts } from '../data/site';
+---
+
+<section class="section">
+  <div class="container split">
+    <div class="split__copy">
+      <p class="eyebrow">Verdicts</p>
+      <h2 class="h2">Needs review. Never plain green.</h2>
+      <p class="lead">
+        A run that finished but hit a permission denial, ran out of context or missed an MCP server
+        is amber, not green. The exit code is not the verdict; what the agent could not do is.
+      </p>
+    </div>
+
+    <div class="table panel verdicts" role="table" aria-label="Example run verdicts">
+      <div class="table__head verdicts__grid" role="row">
+        <span role="columnheader">Status</span>
+        <span role="columnheader">Run</span>
+        <span role="columnheader" class="num">Cost</span>
+      </div>
+      {
+        verdicts.map((v) => (
+          <div class="table__row verdicts__grid" role="row">
+            <span role="cell">
+              <StatusPill status={v.status} />
+            </span>
+            <span role="cell" class="verdicts__run">
+              <span class="verdicts__title">{v.title}</span>
+              <span class:list={['verdicts__sub', { 'verdicts__sub--amber': v.subTone === 'amber' }]}>{v.sub}</span>
+            </span>
+            <span role="cell" class="num verdicts__cost">{v.cost}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 495px) minmax(0, 577px);
+    justify-content: space-between;
+    align-items: start;
+    gap: 48px;
+  }
+
+  .split__copy {
+    padding-top: 10px;
+  }
+
+  .verdicts__grid {
+    grid-template-columns: 130px minmax(0, 1fr) 110px;
+    column-gap: 12px;
+  }
+
+  .verdicts .table__row {
+    align-items: start;
+  }
+
+  .verdicts__run {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .verdicts__title {
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  .verdicts__sub {
+    font-size: 12.5px;
+    line-height: 19px;
+    color: var(--muted);
+  }
+
+  .verdicts__sub--amber {
+    color: var(--sunset-amber);
+  }
+
+  .verdicts__cost {
+    font-size: 13px;
+    line-height: 19.5px;
+  }
+
+  @media (max-width: 1024px) {
+    .split {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .split__copy {
+      max-width: 560px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .verdicts__grid {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      column-gap: 10px;
+    }
+
+    .verdicts .table__row {
+      padding-inline: 12px;
+    }
+  }
+</style>
