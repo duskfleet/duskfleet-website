@@ -7,6 +7,8 @@ export const site = {
   description:
     'DuskFleet runs autonomous Claude Code agents on your local projects, unattended and on a schedule, and records every run: each tool call, each denial, each dollar. Open source, MIT, local-first.',
   repo,
+  // Google Analytics 4 measurement ID (G-XXXXXXXXXX). Empty string = analytics off.
+  gaId: '',
   links: {
     releases: `${repo}/releases`,
     license: `${repo}/blob/main/LICENSE`,
