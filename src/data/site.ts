@@ -18,6 +18,8 @@ export const site = {
     docsSchedules: `${docs}/schedules.md`,
     docsMcp: `${docs}/mcp-server.md`,
     docsHowItWorks: `${docs}/how-it-works.md`,
+    // Privacy page does not exist yet (see duskfleet/duskfleet#128).
+    privacy: '#',
   },
 };
 

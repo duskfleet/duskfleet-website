@@ -20,7 +20,17 @@
 
   --radius-sm: 7px;
   --radius-md: 10px;
+  --radius-card: 12px;
   --radius-lg: 16px;
+
+  --text-on-accent: #1b1a2e;
+
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --touch-min: 44px;
 
   --container: 1120px;
   --gutter: 80px;

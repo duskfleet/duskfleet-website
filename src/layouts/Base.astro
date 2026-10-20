@@ -37,25 +37,49 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    {
-      site.gaId && (
-        <>
-          <script is:inline define:vars={{ gaId: site.gaId }}>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments); }
-            gtag('consent', 'default', {
-              ad_storage: 'denied',
-              ad_user_data: 'denied',
-              ad_personalization: 'denied',
-              analytics_storage: 'denied',
-            });
-            gtag('js', new Date());
-            gtag('config', gaId, { anonymize_ip: true });
-          </script>
-          <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${site.gaId}`} />
-        </>
-      )
-    }
+    <script is:inline define:vars={{ gaId: site.gaId }}>
+      /* Consent state + GA4 loader. GA loads only after an explicit Accept
+         and only when a measurement id is configured. */
+      (function () {
+        var KEY = 'duskfleet-consent';
+        var loaded = false;
+        function read() {
+          try {
+            var v = localStorage.getItem(KEY);
+            return v === 'accepted' || v === 'rejected' ? v : null;
+          } catch (e) {
+            return null;
+          }
+        }
+        function loadAnalytics() {
+          if (loaded || !gaId) return;
+          loaded = true;
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('consent', 'default', {
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+            analytics_storage: 'granted',
+          });
+          gtag('js', new Date());
+          gtag('config', gaId, { anonymize_ip: true });
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
+          document.head.appendChild(s);
+        }
+        window.duskfleetConsent = {
+          get: read,
+          set: function (value) {
+            try { localStorage.setItem(KEY, value); } catch (e) {}
+            if (value === 'accepted') loadAnalytics();
+            document.dispatchEvent(new CustomEvent('duskfleet:consent', { detail: value }));
+          },
+        };
+        if (read() === 'accepted') loadAnalytics();
+      })();
+    </script>
   </head>
   <body>
     <slot />

@@ -16,6 +16,14 @@ npm run preview    # serve dist/
 npm run check      # astro check (types + templates)
 ```
 
+## Analytics and cookie consent
+
+`src/components/CookieBanner.astro` implements the DS-04 consent banner (duskfleet/duskfleet#128).
+The choice is stored in `localStorage` under `duskfleet-consent` (`accepted` | `rejected`) and
+exposed as `window.duskfleetConsent` (`get()`, `set(value)`, event `duskfleet:consent`).
+GA4 (`gaId` in `src/data/site.ts`) loads only after Accept; with Reject or no choice, no analytics
+script loads and no analytics cookie is set. An empty `gaId` disables analytics entirely.
+
 ## Structure
 
 ```
@@ -24,7 +32,7 @@ src/
   styles/tokens.css   Figma variables (colors, fonts, radii) + reset
   styles/global.css   shared primitives: .container .section .panel .btn .pill .table
   layouts/Base.astro  <head>, meta/OG, fonts
-  components/         one component per landing section
+  components/         one component per landing section, plus CookieBanner
   assets/icons/       SVGs exported from Figma (logo mark, feature icons)
   pages/index.astro   composes the sections in Figma order
 ```

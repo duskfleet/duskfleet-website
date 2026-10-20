@@ -1,0 +1,134 @@
+---
+/**
+ * Cookie-consent banner (DS-04, duskfleet/duskfleet#128).
+ * Rendered hidden; the inline script shows it when no choice is stored.
+ * Accept / Reject write the choice through window.duskfleetConsent (Base.astro),
+ * which is also what loads GA4 after Accept.
+ */
+import { site } from '../data/site';
+---
+
+<aside id="cookie-banner" class="cookie" aria-label="Cookie consent" hidden>
+  <p class="cookie__copy">
+    We use analytics cookies to understand how DuskFleet is used.
+    <a class="cookie__link" href={site.links.privacy}>Privacy</a>
+  </p>
+  <div class="cookie__actions">
+    <button type="button" class="cookie__btn" data-consent="accepted">Accept</button>
+    <button type="button" class="cookie__btn" data-consent="rejected">Reject</button>
+  </div>
+</aside>
+
+<script is:inline>
+  (function () {
+    var banner = document.getElementById('cookie-banner');
+    var consent = window.duskfleetConsent;
+    if (!banner || !consent) return;
+    if (consent.get()) return;
+    banner.hidden = false;
+    banner.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-consent]');
+      if (!btn) return;
+      consent.set(btn.getAttribute('data-consent'));
+      banner.hidden = true;
+    });
+  })();
+</script>
+
+<style>
+  .cookie {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-6);
+    background: var(--panel);
+    border-top: 1px solid var(--accent);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .cookie[hidden] {
+    display: none;
+  }
+
+  .cookie__copy {
+    min-width: 0;
+  }
+
+  .cookie__link {
+    margin-left: var(--space-2);
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+
+  .cookie__actions {
+    display: flex;
+    flex-shrink: 0;
+    gap: var(--space-3);
+  }
+
+  .cookie__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    height: var(--touch-min);
+    padding: 0 var(--space-5);
+    border: 0;
+    border-radius: var(--radius-md);
+    background: var(--accent);
+    color: var(--text-on-accent);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.45;
+    cursor: pointer;
+  }
+
+  .cookie__btn:hover {
+    filter: brightness(1.06);
+  }
+
+  .cookie__link:focus-visible,
+  .cookie__btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .cookie__btn:focus-visible {
+    border-radius: var(--radius-card);
+  }
+
+  @media (max-width: 640px) {
+    .cookie {
+      inset: auto var(--space-4) var(--space-4) var(--space-4);
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-card);
+    }
+
+    .cookie__link {
+      display: block;
+      width: fit-content;
+      margin: var(--space-2) 0 0;
+    }
+
+    .cookie__actions {
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .cookie__btn {
+      width: 100%;
+    }
+  }
+</style>
