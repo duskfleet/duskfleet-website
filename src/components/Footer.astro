@@ -2,6 +2,8 @@
 import { footerColumns } from '../data/site';
 
 const year = new Date().getFullYear();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const url = (href: string) => (href.startsWith('#') ? `${base}/${href}` : href.startsWith('/') ? base + href : href);
 ---
 
 <footer class="footer">
@@ -22,7 +24,7 @@ const year = new Date().getFullYear();
             <ul>
               {col.links.map((l) => (
                 <li>
-                  <a href={l.href} target={l.external ? '_blank' : undefined} rel={l.external ? 'noopener' : undefined}>
+                  <a href={url(l.href)} target={l.external ? '_blank' : undefined} rel={l.external ? 'noopener' : undefined}>
                     {l.label}
                   </a>
                 </li>

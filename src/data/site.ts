@@ -18,8 +18,7 @@ export const site = {
     docsSchedules: `${docs}/schedules.md`,
     docsMcp: `${docs}/mcp-server.md`,
     docsHowItWorks: `${docs}/how-it-works.md`,
-    // Privacy page does not exist yet (see duskfleet/duskfleet#128).
-    privacy: '#',
+    privacy: '/privacy',
   },
 };
 
@@ -137,6 +136,7 @@ export const footerColumns: { title: string; links: NavLink[] }[] = [
       { label: 'GitHub', href: site.repo, external: true },
       { label: 'Roadmap', href: site.links.roadmap, external: true },
       { label: 'License', href: site.links.license, external: true },
+      { label: 'Privacy', href: site.links.privacy },
     ],
   },
 ];

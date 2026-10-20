@@ -1,11 +1,14 @@
 ---
 import mark from '../assets/icons/mark.svg?raw';
 import { nav } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const home = `${base}/`;
+const url = (href: string) => (href.startsWith('#') ? home + href : href.startsWith('/') ? base + href : href);
 ---
 
 <header class="header">
   <div class="container header__inner">
-    <a href="#top" class="logo" aria-label="DuskFleet, back to top">
+    <a href={home + '#top'} class="logo" aria-label="DuskFleet, back to top">
       <span class="logo__mark" set:html={mark} />
       <span class="logo__word"><span>dusk</span><span class="logo__accent">fleet</span></span>
     </a>
@@ -13,7 +16,7 @@ import { nav } from '../data/site';
       {
         nav.map((item) => (
           <a
-            href={item.href}
+            href={url(item.href)}
             class="nav__link"
             target={item.external ? '_blank' : undefined}
             rel={item.external ? 'noopener' : undefined}
@@ -22,7 +25,7 @@ import { nav } from '../data/site';
           </a>
         ))
       }
-      <a href="#start" class="nav__cta">Install</a>
+      <a href={home + '#start'} class="nav__cta">Install</a>
     </nav>
   </div>
 </header>

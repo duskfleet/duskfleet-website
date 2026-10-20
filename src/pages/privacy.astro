@@ -1,0 +1,131 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import { site } from '../data/site';
+
+const updated = '20 October 2026';
+---
+
+<Base title="Privacy — DuskFleet" description="What the DuskFleet website collects, and how to change your cookie choice.">
+  <Header />
+  <main>
+    <article class="privacy">
+      <div class="container privacy__inner">
+        <p class="eyebrow">Privacy</p>
+        <h1 class="h2">What this website collects</h1>
+        <p class="lead">Last updated {updated}.</p>
+
+        <section>
+          <h2>The short version</h2>
+          <p>
+            duskfleet.com is a static page with no accounts, no forms and no tracking by default.
+            The only optional data collection is Google Analytics, and it runs only after you choose
+            <strong>Accept</strong> in the cookie banner. The DuskFleet software itself runs on your own
+            machine and never talks to this website.
+          </p>
+        </section>
+
+        <section>
+          <h2>Hosting</h2>
+          <p>
+            The site is served by GitHub Pages. Like any web host, GitHub may record your IP address in
+            server logs to keep the service running. See the
+            <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub Privacy Statement</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2>Analytics, only with your consent</h2>
+          <p>
+            If you accept, we load Google Analytics 4 to learn how many people visit, which pages they
+            read and where they come from. It sets the <code>_ga</code> and <code>_ga_*</code> cookies
+            (kept for up to two years) and sends page views, scrolls and outbound clicks to Google with
+            IP anonymisation on. Advertising storage and personalisation stay off. Google processes this
+            data on our behalf; see
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's privacy policy</a>.
+          </p>
+          <p>
+            If you reject, or make no choice, nothing is loaded and no analytics cookie is set.
+          </p>
+          <p>
+            <button type="button" id="change-consent" class="btn btn--ghost">Change your cookie choice</button>
+          </p>
+        </section>
+
+        <section>
+          <h2>Nothing else</h2>
+          <p>
+            We do not collect names, emails or any other personal data on this site. Links to GitHub,
+            documentation and releases take you to github.com, which has its own privacy terms.
+          </p>
+        </section>
+
+        <section>
+          <h2>Questions</h2>
+          <p>
+            Open an issue on the <a href={site.repo} target="_blank" rel="noopener">DuskFleet repository</a>.
+          </p>
+        </section>
+      </div>
+    </article>
+  </main>
+  <Footer />
+  <CookieBanner />
+</Base>
+
+<script is:inline>
+  document.getElementById('change-consent')?.addEventListener('click', function () {
+    try { localStorage.removeItem('duskfleet-consent'); } catch (e) {}
+    location.reload();
+  });
+</script>
+
+<style>
+  .privacy {
+    padding-block: var(--section-pad) calc(var(--section-pad) + 80px);
+  }
+
+  .privacy__inner {
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .privacy section {
+    margin-top: 40px;
+  }
+
+  .privacy h2 {
+    font-size: 22px;
+    line-height: 28px;
+    letter-spacing: -0.01em;
+  }
+
+  .privacy p {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .privacy strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .privacy code {
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .privacy a:not(.btn) {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+
+  .privacy .btn {
+    margin-top: 8px;
+  }
+</style>

@@ -6,12 +6,14 @@
  * which is also what loads GA4 after Accept.
  */
 import { site } from '../data/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <aside id="cookie-banner" class="cookie" aria-label="Cookie consent" hidden>
   <p class="cookie__copy">
     We use analytics cookies to understand how DuskFleet is used.
-    <a class="cookie__link" href={site.links.privacy}>Privacy</a>
+    <a class="cookie__link" href={base + site.links.privacy}>Privacy</a>
   </p>
   <div class="cookie__actions">
     <button type="button" class="cookie__btn" data-consent="accepted">Accept</button>
