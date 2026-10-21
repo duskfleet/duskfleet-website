@@ -33,7 +33,8 @@ src/
   components/         one component per landing section, plus CookieBanner
   assets/icons/       SVGs exported from Figma
   pages/              index.astro (sections in Figma order), privacy.astro
-scripts/              check-public.mjs, pr-worktree.sh (worktree under .claude/worktrees/)
+scripts/              check-public.mjs, pr-worktree.sh (worktree under .claude/worktrees/),
+                      issue-plan.mjs (JSON snapshot of the issue flow for the planner agent)
 ```
 
 ## Rules
