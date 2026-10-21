@@ -1,0 +1,30 @@
+name: CI
+
+# The gate every pull request must pass before it can merge into main: the ruleset on main
+# requires the `checks` job (keep that job name). Deploy is a separate workflow (deploy.yml).
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check:public
+      - run: npm run check
+      - run: npm run build

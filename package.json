@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "astro": "astro"
+    "astro": "astro",
+    "check:public": "node scripts/check-public.mjs"
   },
   "dependencies": {
     "@fontsource-variable/outfit": "^5.2.6",
