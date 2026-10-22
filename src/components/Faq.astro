@@ -2,14 +2,14 @@
 import { faq } from '../data/site';
 ---
 
-<section id="faq" class="section">
+<section id="faq" class="section" data-track-section="faq">
   <div class="container">
     <div class="faq">
       <h2 class="h2 faq__title">Frequently asked questions.</h2>
       <div class="faq__list">
         {
           faq.map((item) => (
-            <details class="faq__item">
+            <details class="faq__item" data-track="faq_open" data-track-question={item.id}>
               <summary class="faq__q">
                 {item.q}
                 <span class="faq__chevron" aria-hidden="true" />

@@ -22,13 +22,37 @@ export const site = {
   },
 };
 
-export type NavLink = { label: string; href: string; external?: boolean };
+/*
+ * GA4 custom events (issue #5). Elements carry data-track="<event>" plus one
+ * data-track-<param> attribute per parameter; the listener in Base.astro sends
+ * them only once GA has loaded after Accept, and drops any value that is not in
+ * its own allow-list. Keep that list, these types and the Privacy page in sync.
+ */
+export type Track =
+  | { event: 'click_install_cta'; location: 'hero' | 'nav' }
+  | { event: 'click_github'; location: 'hero' | 'cta' | 'header' | 'footer'; target: 'repo' | 'releases' | 'license' | 'issues' }
+  | {
+      event: 'click_docs';
+      location: 'nav' | 'cta' | 'footer';
+      doc: 'readme' | 'agents' | 'schedules' | 'mcp' | 'how-it-works' | 'cli' | 'configuration' | 'dashboard' | 'troubleshooting';
+    };
+
+/** Turns a Track into the data-track attributes the Base.astro listener reads. */
+export const trackAttrs = (t?: Track): Record<string, string> => {
+  if (!t) return {};
+  const { event, ...params } = t;
+  const attrs: Record<string, string> = { 'data-track': event };
+  for (const [k, v] of Object.entries(params)) attrs[`data-track-${k}`] = v;
+  return attrs;
+};
+
+export type NavLink = { label: string; href: string; external?: boolean; track?: Track };
 
 export const nav: NavLink[] = [
   { label: 'How it works', href: '#how' },
   { label: 'Features', href: '#features' },
   { label: 'FAQ', href: '#faq' },
-  { label: 'Docs', href: site.links.docs, external: true },
+  { label: 'Docs', href: site.links.docs, external: true, track: { event: 'click_docs', location: 'nav', doc: 'readme' } },
 ];
 
 export type Status = 'running' | 'review' | 'completed' | 'failed';
@@ -80,28 +104,35 @@ export const stats = [
   { value: 'MIT', label: 'license, public repo' },
 ];
 
+// `id` is the faq_open event's `question` parameter: short, fixed, never the question text.
 export const faq = [
   {
+    id: 'api-key',
     q: 'Does it need an API key?',
     a: 'No. It spawns the Claude Code CLI already logged in on your machine. Duskfleet never sees or stores credentials.',
   },
   {
+    id: 'run-cost',
     q: 'What does a run cost?',
     a: 'Whatever Claude Code charges for that session, nothing more. Duskfleet records the cost per run and lets you cap a budget per agent.',
   },
   {
+    id: 'sandbox',
     q: 'Can an agent break out of its project?',
     a: 'File tools and Bash paths are confined to the project directory plus the extra directories you allow. Anything outside is denied and written to the log.',
   },
   {
+    id: 'overlap',
     q: 'What happens if two schedules fire on the same project?',
     a: 'One run per project and one per agent at a time. The second tick is recorded as skipped, never queued.',
   },
   {
+    id: 'other-clis',
     q: 'Does it work with Codex or other CLIs?',
     a: 'Today it runs Claude Code only. The runner is a thin layer over the CLI, so other agents are on the roadmap once their non-interactive mode is stable.',
   },
   {
+    id: 'data',
     q: 'Where is my data?',
     a: "In the repo's data folder: one SQLite database and one JSONL log per run. Delete the folder and it is gone.",
   },
@@ -119,17 +150,18 @@ export const footerColumns: { title: string; links: NavLink[] }[] = [
   {
     title: 'Docs',
     links: [
-      { label: 'Agents', href: site.links.docsAgents, external: true },
-      { label: 'Schedules', href: site.links.docsSchedules, external: true },
-      { label: 'MCP server', href: site.links.docsMcp, external: true },
+      { label: 'Agents', href: site.links.docsAgents, external: true, track: { event: 'click_docs', location: 'footer', doc: 'agents' } },
+      { label: 'Schedules', href: site.links.docsSchedules, external: true, track: { event: 'click_docs', location: 'footer', doc: 'schedules' } },
+      { label: 'MCP server', href: site.links.docsMcp, external: true, track: { event: 'click_docs', location: 'footer', doc: 'mcp' } },
     ],
   },
   {
     title: 'Project',
     links: [
-      { label: 'GitHub', href: site.repo, external: true },
-      { label: 'Roadmap', href: site.links.roadmap, external: true },
-      { label: 'License', href: site.links.license, external: true },
+      { label: 'GitHub', href: site.repo, external: true, track: { event: 'click_github', location: 'footer', target: 'repo' } },
+      // The roadmap is a section of the repo README, so it counts as the repo target.
+      { label: 'Roadmap', href: site.links.roadmap, external: true, track: { event: 'click_github', location: 'footer', target: 'repo' } },
+      { label: 'License', href: site.links.license, external: true, track: { event: 'click_github', location: 'footer', target: 'license' } },
       { label: 'Privacy', href: site.links.privacy },
     ],
   },

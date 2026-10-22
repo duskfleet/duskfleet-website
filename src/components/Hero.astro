@@ -6,7 +6,7 @@
 import { site } from '../data/site';
 ---
 
-<section id="top" class="hero">
+<section id="top" class="hero" data-track-section="hero">
   <div class="container hero__inner">
     <div class="hero__copy">
       <h1 class="hero__title">A fleet of agents for your own machine.</h1>
@@ -15,8 +15,16 @@ import { site } from '../data/site';
         schedule, records every run in SQLite and shows it in a dashboard on localhost.
       </p>
       <div class="hero__actions">
-        <a href="#start" class="btn btn--primary">Install the local version</a>
-        <a href={site.repo} class="btn btn--ghost" target="_blank" rel="noopener">Star on GitHub</a>
+        <a href="#start" class="btn btn--primary" data-track="click_install_cta" data-track-location="hero">Install the local version</a>
+        <a
+          href={site.repo}
+          class="btn btn--ghost"
+          target="_blank"
+          rel="noopener"
+          data-track="click_github"
+          data-track-location="hero"
+          data-track-target="repo">Star on GitHub</a
+        >
       </div>
       <p class="hero__req">macOS · Linux · Node 24+ · Claude Code logged in</p>
     </div>

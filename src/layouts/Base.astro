@@ -62,6 +62,9 @@ const ogImage = Astro.site ? new URL(`${base}/og.png`, Astro.site).href : undefi
           loaded = true;
           window.dataLayer = window.dataLayer || [];
           function gtag() { dataLayer.push(arguments); }
+          /* window.gtag exists only from here on, i.e. only after Accept:
+             the event listener below checks it before sending anything. */
+          window.gtag = gtag;
           gtag('consent', 'default', {
             ad_storage: 'denied',
             ad_user_data: 'denied',
@@ -69,7 +72,7 @@ const ogImage = Astro.site ? new URL(`${base}/og.png`, Astro.site).href : undefi
             analytics_storage: 'granted',
           });
           gtag('js', new Date());
-          gtag('config', gaId, { anonymize_ip: true });
+          gtag('config', gaId);
           var s = document.createElement('script');
           s.async = true;
           s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
@@ -84,6 +87,86 @@ const ogImage = Astro.site ? new URL(`${base}/og.png`, Astro.site).href : undefi
           },
         };
         if (read() === 'accepted') loadAnalytics();
+      })();
+    </script>
+    <script is:inline>
+      /* GA4 custom events. Elements carry data-track="<event>" and one
+         data-track-<param> per parameter (see Track in src/data/site.ts).
+         Nothing is sent unless window.gtag exists (Accept given and GA
+         loaded), and an event whose values are not all in ALLOW is dropped:
+         no free text, no URLs, no personal data. */
+      (function () {
+        var ALLOW = {
+          click_install_cta: { location: ['hero', 'nav'] },
+          click_github: {
+            location: ['hero', 'cta', 'header', 'footer'],
+            target: ['repo', 'releases', 'license', 'issues'],
+          },
+          click_docs: {
+            location: ['nav', 'cta', 'footer'],
+            doc: ['readme', 'agents', 'schedules', 'mcp', 'how-it-works', 'cli', 'configuration', 'dashboard', 'troubleshooting'],
+          },
+          faq_open: { question: ['api-key', 'run-cost', 'sandbox', 'overlap', 'other-clis', 'data'] },
+          view_section: { section: ['hero', 'how-it-works', 'features', 'faq', 'cta'] },
+        };
+        function send(name, el) {
+          if (typeof window.gtag !== 'function') return false;
+          var spec = ALLOW[name];
+          if (!spec) return false;
+          var params = {};
+          for (var key in spec) {
+            var value = el.getAttribute('data-track-' + key);
+            if (spec[key].indexOf(value) === -1) return false;
+            params[key] = value;
+          }
+          window.gtag('event', name, params);
+          return true;
+        }
+        document.addEventListener('click', function (e) {
+          var el = e.target instanceof Element ? e.target.closest('a[data-track], button[data-track]') : null;
+          if (el) send(el.getAttribute('data-track'), el);
+        });
+        /* <details> toggle does not bubble: listen in the capture phase. */
+        document.addEventListener(
+          'toggle',
+          function (e) {
+            var el = e.target;
+            if (el instanceof HTMLDetailsElement && el.open && el.getAttribute('data-track') === 'faq_open') {
+              send('faq_open', el);
+            }
+          },
+          true,
+        );
+        /* view_section: once per section per page view, when the section
+           crosses the middle band of the viewport (works for sections of any
+           height). Only counted as seen when actually sent, i.e. after Accept. */
+        var io = null;
+        var pending = [];
+        function observe() {
+          pending.forEach(function (s) { io.unobserve(s); io.observe(s); });
+        }
+        function observeSections() {
+          if (!('IntersectionObserver' in window)) return;
+          io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting && send('view_section', entry.target)) {
+                  io.unobserve(entry.target);
+                  pending = pending.filter(function (s) { return s !== entry.target; });
+                }
+              });
+            },
+            { rootMargin: '-40% 0px -40% 0px' },
+          );
+          pending = Array.prototype.slice.call(document.querySelectorAll('[data-track-section]'));
+          observe();
+        }
+        /* Accept given on this page: re-observe so the section in view counts. */
+        document.addEventListener('duskfleet:consent', function (e) {
+          if (io && e.detail === 'accepted') observe();
+        });
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', observeSections);
+        else observeSections();
       })();
     </script>
   </head>
