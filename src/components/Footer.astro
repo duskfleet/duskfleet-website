@@ -1,6 +1,6 @@
 ---
 import Lockup from './Lockup.astro';
-import { footerColumns } from '../data/site';
+import { footerColumns, trackAttrs } from '../data/site';
 
 const year = new Date().getFullYear();
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -22,7 +22,12 @@ const url = (href: string) => (href.startsWith('#') ? `${base}/${href}` : href.s
             <ul>
               {col.links.map((l) => (
                 <li>
-                  <a href={url(l.href)} target={l.external ? '_blank' : undefined} rel={l.external ? 'noopener' : undefined}>
+                  <a
+                    href={url(l.href)}
+                    target={l.external ? '_blank' : undefined}
+                    rel={l.external ? 'noopener' : undefined}
+                    {...trackAttrs(l.track)}
+                  >
                     {l.label}
                   </a>
                 </li>
