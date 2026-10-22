@@ -1,0 +1,52 @@
+---
+/**
+ * Brand/Lockup (Figma 195:26): the D-sail mark plus the lowercase wordmark.
+ * The mark keeps its sunset gradient and its dark sail (--mark-sail) in every theme;
+ * "fleet" carries the same sunset gradient as a text fill.
+ * It is a logotype with the accessible name "Duskfleet"; a link wrapping it still needs
+ * its own label.
+ */
+import mark from '../assets/icons/mark.svg';
+---
+
+<span class="lockup" role="img" aria-label="Duskfleet">
+  <img class="lockup__mark" src={mark.src} width="36" height="36" alt="" />
+  <span class="lockup__word" aria-hidden="true"><span>dusk</span><span class="lockup__fleet">fleet</span></span>
+</span>
+
+<style>
+  .lockup {
+    display: inline-flex;
+    align-items: center;
+    /* The D ends 4.8 px inside its 36 px box: 2 px here gives the 7 px mark-to-wordmark gap of the frame. */
+    gap: 2px;
+  }
+
+  .lockup__mark {
+    width: 36px;
+    height: 36px;
+  }
+
+  .lockup__word {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 33px;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .lockup__fleet {
+    background: var(--gradient-sunset);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  @media (forced-colors: active) {
+    .lockup__fleet {
+      color: CanvasText;
+    }
+  }
+</style>

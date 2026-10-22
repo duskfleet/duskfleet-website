@@ -2,10 +2,10 @@ const repo = 'https://github.com/duskfleet/duskfleet';
 const docs = `${repo}/blob/main/docs`;
 
 export const site = {
-  name: 'DuskFleet',
-  title: 'DuskFleet — A fleet of agents for your own machine',
-  description:
-    'DuskFleet runs autonomous Claude Code agents on your local projects, unattended and on a schedule, and records every run: each tool call, each denial, each dollar. Open source, MIT, local-first.',
+  name: 'Duskfleet',
+  title: 'Duskfleet — A fleet of agents for your own machine',
+  // The primary tagline (DS-06): meta, OG and Twitter description.
+  description: 'A fleet of agents for your own machine.',
   repo,
   // Google Analytics 4 measurement ID (G-XXXXXXXXXX). Empty string = analytics off.
   gaId: 'G-ZHNFJM5TPB',
@@ -39,12 +39,6 @@ export const statusLabel: Record<Status, string> = {
   completed: 'completed',
   failed: 'failed',
 };
-
-export const heroRuns: { status: Status; title: string; meta: string }[] = [
-  { status: 'running', title: 'Fix the flaky scheduler test and explain the cause', meta: 'sonnet · 2m 10s' },
-  { status: 'review', title: 'Nightly: update dependencies and run the suite', meta: '1 denial · $0.42' },
-  { status: 'completed', title: 'Review PR 41 for missing tests', meta: 'haiku · $0.03' },
-];
 
 export const verdicts: { status: Status; title: string; sub: string; subTone?: 'amber'; cost: string }[] = [
   { status: 'completed', title: 'Add retry to the fetch helper', sub: 'test-fixer · app · 4 turns', cost: '$0.07' },
@@ -89,11 +83,11 @@ export const stats = [
 export const faq = [
   {
     q: 'Does it need an API key?',
-    a: 'No. It spawns the Claude Code CLI already logged in on your machine. DuskFleet never sees or stores credentials.',
+    a: 'No. It spawns the Claude Code CLI already logged in on your machine. Duskfleet never sees or stores credentials.',
   },
   {
     q: 'What does a run cost?',
-    a: 'Whatever Claude Code charges for that session, nothing more. DuskFleet records the cost per run and lets you cap a budget per agent.',
+    a: 'Whatever Claude Code charges for that session, nothing more. Duskfleet records the cost per run and lets you cap a budget per agent.',
   },
   {
     q: 'Can an agent break out of its project?',
