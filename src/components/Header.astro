@@ -1,5 +1,5 @@
 ---
-import mark from '../assets/icons/mark.svg?raw';
+import Lockup from './Lockup.astro';
 import { nav } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const home = `${base}/`;
@@ -8,9 +8,8 @@ const url = (href: string) => (href.startsWith('#') ? home + href : href.startsW
 
 <header class="header">
   <div class="container header__inner">
-    <a href={home + '#top'} class="logo" aria-label="DuskFleet, back to top">
-      <span class="logo__mark" set:html={mark} />
-      <span class="logo__word"><span>dusk</span><span class="logo__accent">fleet</span></span>
+    <a href={home + '#top'} class="logo" aria-label="Duskfleet, back to top">
+      <Lockup />
     </a>
     <nav class="nav" aria-label="Site">
       {
@@ -50,25 +49,6 @@ const url = (href: string) => (href.startsWith('#') ? home + href : href.startsW
   .logo {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    margin-left: 16px;
-  }
-
-  .logo__mark :global(svg) {
-    width: 36px;
-    height: 36px;
-  }
-
-  .logo__word {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 22px;
-    letter-spacing: -0.02em;
-    line-height: 33px;
-  }
-
-  .logo__accent {
-    color: var(--accent);
   }
 
   .nav {
@@ -108,10 +88,6 @@ const url = (href: string) => (href.startsWith('#') ? home + href : href.startsW
   }
 
   @media (max-width: 640px) {
-    .logo {
-      margin-left: 0;
-    }
-
     .nav__link {
       display: none;
     }

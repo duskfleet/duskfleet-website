@@ -25,6 +25,11 @@
 
   --text-on-accent: #1b1a2e;
 
+  /* brand/mark/sail: the sail of the D mark, #0B0D1A (color/night) in every mode. */
+  --mark-sail: #0b0d1a;
+  /* color/sunset/amber 0 %, orange 55 %, coral 100 %: the mark and the "fleet" of the wordmark. */
+  --gradient-sunset: linear-gradient(90deg, var(--sunset-amber) 0%, var(--accent) 55%, var(--sunset-coral) 100%);
+
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
