@@ -3,9 +3,13 @@ const docs = `${repo}/blob/main/docs`;
 
 export const site = {
   name: 'Duskfleet',
-  title: 'Duskfleet — A fleet of agents for your own machine',
-  // The primary tagline (DS-06): meta, OG and Twitter description.
-  description: 'A fleet of agents for your own machine.',
+  title: 'Duskfleet: A fleet of agents for your own machine · Claude Code',
+  // Meta, OG and Twitter description: 155 characters or fewer.
+  description:
+    'Duskfleet runs Claude Code agents on your own projects, unattended and on a schedule, and records every tool call, denial and dollar. Open source, MIT.',
+  // Alt text of og.png (Figma OG/1200x630, 197:20): describes the image, not the page.
+  ogImageAlt:
+    'The duskfleet logo and the tagline "A fleet of agents for your own machine." in light text on a dark background, with github.com/duskfleet/duskfleet below.',
   repo,
   // Google Analytics 4 measurement ID (G-XXXXXXXXXX). Empty string = analytics off.
   gaId: 'G-ZHNFJM5TPB',
