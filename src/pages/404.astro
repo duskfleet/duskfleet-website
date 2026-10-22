@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import { site } from '../data/site';
+
+/*
+ * Branded 404. GitHub Pages serves dist/404.html with HTTP 404 for any unknown
+ * path, at any depth, so every link here goes through the computed base.
+ * Figma has no 404 frame: the page reuses the Privacy page primitives.
+ */
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base title="Page not found — Duskfleet" description="This page does not exist on duskfleet.com." noindex>
+  <Header />
+  <main>
+    <section class="notfound">
+      <div class="container notfound__inner">
+        <p class="eyebrow">404</p>
+        <h1 class="h2">This page is not in the fleet</h1>
+        <p class="lead">The address may be mistyped, or the page has moved. Start again from the home page, or find the code and docs on GitHub.</p>
+        <p class="notfound__actions">
+          <a class="btn btn--primary" href={`${base}/`}>Go to the home page</a>
+          <a class="btn btn--ghost" href={site.repo}>Duskfleet on GitHub</a>
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <CookieBanner />
+</Base>
+
+<style>
+  .notfound {
+    padding-block: var(--section-pad) calc(var(--section-pad) * 2);
+  }
+
+  .notfound__inner {
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .notfound__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+</style>

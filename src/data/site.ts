@@ -18,7 +18,8 @@ export const site = {
     docsSchedules: `${docs}/schedules.md`,
     docsMcp: `${docs}/mcp-server.md`,
     docsHowItWorks: `${docs}/how-it-works.md`,
-    privacy: '/privacy',
+    // Trailing slash: GitHub Pages serves /privacy/index.html and 301s /privacy.
+    privacy: '/privacy/',
   },
 };
 

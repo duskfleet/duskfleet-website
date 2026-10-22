@@ -35,6 +35,9 @@ src/
   components/         one component per landing section, plus CookieBanner
   assets/icons/       SVGs exported from Figma (logo mark, feature icons)
   pages/index.astro   composes the sections in Figma order
+  pages/404.astro     branded 404 (noindex), served by GitHub Pages for unknown paths
+  pages/sitemap-*.ts  sitemap-index.xml and sitemap-0.xml, generated at build time
+public/robots.txt     allows everything, names the sitemap index
 ```
 
 ## Deploy
