@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://duskfleet.com/sitemap-index.xml
