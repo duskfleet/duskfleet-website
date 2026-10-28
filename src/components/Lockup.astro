@@ -5,11 +5,21 @@
  * "fleet" carries the same sunset gradient as a text fill.
  * It is a logotype with the accessible name "Duskfleet"; a link wrapping it still needs
  * its own label.
+ *
+ * size="header" is the `Brand/Lockup · header sizes` variant `Size=B +20` (Figma 1036:226):
+ * the default lockup scaled ×1.909, with the hull-to-wordmark distance kept at 6.8 px.
+ * The default size stays the one used by the footer.
  */
 import mark from '../assets/icons/mark.svg';
+
+interface Props {
+  size?: 'default' | 'header';
+}
+
+const { size = 'default' } = Astro.props;
 ---
 
-<span class="lockup" role="img" aria-label="Duskfleet">
+<span class:list={['lockup', { 'lockup--header': size === 'header' }]} role="img" aria-label="Duskfleet">
   <img class="lockup__mark" src={mark.src} width="36" height="36" alt="" />
   <span class="lockup__word" aria-hidden="true"><span>dusk</span><span class="lockup__fleet">fleet</span></span>
 </span>
@@ -35,6 +45,23 @@ import mark from '../assets/icons/mark.svg';
     letter-spacing: -0.02em;
     color: var(--text);
     white-space: nowrap;
+  }
+
+  /* Size=B +20 (1036:226): box 238.3 × 68.7. The visible hull-to-wordmark distance stays 6.8 px,
+     so the gap is 6.8 − 4.8 × 1.909 = −2.4 px. */
+  .lockup--header {
+    gap: 0;
+  }
+
+  .lockup--header .lockup__mark {
+    width: 68.7px;
+    height: 68.7px;
+    margin-right: -2.4px;
+  }
+
+  .lockup--header .lockup__word {
+    font-size: 42px;
+    line-height: 63px;
   }
 
   .lockup__fleet {

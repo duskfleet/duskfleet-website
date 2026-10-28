@@ -9,7 +9,7 @@ const url = (href: string) => (href.startsWith('#') ? home + href : href.startsW
 <header class="header">
   <div class="container header__inner">
     <a href={home + '#top'} class="logo" aria-label="Duskfleet, back to top">
-      <Lockup />
+      <Lockup size="header" />
     </a>
     <nav class="nav" aria-label="Site">
       {
@@ -55,6 +55,9 @@ const url = (href: string) => (href.startsWith('#') ? home + href : href.startsW
     display: flex;
     align-items: center;
     gap: 4px;
+    /* DS-09: the menu's x-height band sits on the wordmark's lowercase line,
+       7 px below the lockup box centre (Figma 1101:194). */
+    transform: translateY(7px);
   }
 
   .nav__link {
@@ -90,6 +93,19 @@ const url = (href: string) => (href.startsWith('#') ? home + href : href.startsW
   @media (max-width: 640px) {
     .nav__link {
       display: none;
+    }
+
+    /* Mobile has no menu offset (DS-09): only Install shows, centred on the lockup. */
+    .nav {
+      transform: none;
+    }
+  }
+
+  /* At 360 px the 320 px row holds the 238.3 px lockup and the 78 px Install only without
+     the 8 px lead-in. */
+  @media (max-width: 380px) {
+    .nav__cta {
+      margin-left: 0;
     }
   }
 </style>
