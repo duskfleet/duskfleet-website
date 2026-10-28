@@ -96,5 +96,10 @@ const url = (href: string) => (href.startsWith('#') ? home + href : href.startsW
     .nav__link {
       display: none;
     }
+
+    /* Mobile has no menu offset (DS-09): only Install shows, centred on the lockup. */
+    .nav {
+      transform: none;
+    }
   }
 </style>
