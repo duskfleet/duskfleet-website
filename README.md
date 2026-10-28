@@ -31,7 +31,7 @@ src/
   data/site.ts        links, nav, demo table rows, FAQ copy
   styles/tokens.css   Figma variables (colors, fonts, radii) + reset
   styles/global.css   shared primitives: .container .section .panel .btn .pill .table
-  layouts/Base.astro  <head>, meta/OG, fonts
+  layouts/Base.astro  <head>, meta/OG, JSON-LD (home only), fonts
   components/         one component per landing section, plus CookieBanner
   assets/icons/       SVGs exported from Figma (logo mark, feature icons)
   pages/index.astro   composes the sections in Figma order

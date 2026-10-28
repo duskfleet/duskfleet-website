@@ -29,7 +29,7 @@ src/
   data/site.ts        links, nav, GA4 measurement id (gaId), demo rows, FAQ copy
   styles/tokens.css   Figma variables (colours, fonts, radii, spacing) + reset
   styles/global.css   shared primitives: .container .section .panel .btn .pill .table
-  layouts/Base.astro  <head>, meta/OG, fonts, consent state + GA4 loader
+  layouts/Base.astro  <head>, meta/OG, JSON-LD (home only, `jsonLd` prop), fonts, consent state + GA4 loader
   components/         one component per landing section, plus CookieBanner
   assets/icons/       SVGs exported from Figma
   pages/              index.astro (sections in Figma order), privacy.astro, 404.astro (noindex),
