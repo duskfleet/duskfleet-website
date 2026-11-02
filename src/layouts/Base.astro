@@ -14,12 +14,47 @@ interface Props {
   description?: string;
   /** Keep the page out of search results (the 404 page): adds robots noindex, drops canonical. */
   noindex?: boolean;
+  /** Emit the SoftwareApplication + SoftwareSourceCode JSON-LD (home page only). */
+  jsonLd?: boolean;
 }
 
-const { title = site.title, description = site.description, noindex = false } = Astro.props;
+const { title = site.title, description = site.description, noindex = false, jsonLd = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const canonical = Astro.site && !noindex ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const ogImage = Astro.site ? new URL(`${base}/og.png`, Astro.site).href : undefined;
+
+// Structured data: only facts stated in the product README and LICENSE.
+// No aggregateRating or review (there are none), no FAQPage (Google restricts it).
+const home = Astro.site ? new URL(`${base}/`, Astro.site).href : undefined;
+const structuredData =
+  jsonLd && home
+    ? JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'SoftwareApplication',
+            '@id': `${home}#app`,
+            name: site.name,
+            url: home,
+            description: site.tagline,
+            applicationCategory: 'DeveloperApplication',
+            operatingSystem: 'macOS, Linux',
+            offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+            license: site.links.license,
+          },
+          {
+            '@type': 'SoftwareSourceCode',
+            '@id': `${home}#source`,
+            name: site.name,
+            description: site.tagline,
+            codeRepository: site.repo,
+            programmingLanguage: 'TypeScript',
+            license: site.links.license,
+            targetProduct: { '@id': `${home}#app` },
+          },
+        ],
+      }).replace(/</g, '\\u003c')
+    : undefined;
 ---
 
 <!doctype html>
@@ -47,6 +82,7 @@ const ogImage = Astro.site ? new URL(`${base}/og.png`, Astro.site).href : undefi
     <meta name="twitter:description" content={description} />
     {ogImage && <meta name="twitter:image" content={ogImage} />}
     {ogImage && <meta name="twitter:image:alt" content={site.ogImageAlt} />}
+    {structuredData && <script type="application/ld+json" is:inline set:html={structuredData} />}
     <script is:inline define:vars={{ gaId: site.gaId }}>
       /* Consent state + GA4 loader. GA loads only after an explicit Accept
          and only when a measurement id is configured. */
