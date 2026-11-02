@@ -10,6 +10,8 @@ export const site = {
   // Alt text of og.png (Figma OG/1200x630, 197:20): describes the image, not the page.
   ogImageAlt:
     'The duskfleet logo and the tagline "A fleet of agents for your own machine." in light text on a dark background, with github.com/duskfleet/duskfleet below.',
+  // README tagline, used as the JSON-LD description of the home page.
+  tagline: 'A fleet of agents for your own machine',
   repo,
   // Google Analytics 4 measurement ID (G-XXXXXXXXXX). Empty string = analytics off.
   gaId: 'G-ZHNFJM5TPB',
