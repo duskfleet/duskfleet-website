@@ -3,7 +3,7 @@ import markLarge from '../assets/icons/mark-large.svg?raw';
 import { site } from '../data/site';
 ---
 
-<section id="start" class="section cta">
+<section id="start" class="section cta" data-track-section="cta">
   <div class="container cta__inner">
     <span class="cta__mark" set:html={markLarge} />
     <h2 class="cta__title">Launch a fleet in four commands.</h2>
@@ -12,8 +12,24 @@ import { site } from '../data/site';
 <span class="dim">$</span> npm run cli -- doctor
 <span class="dim">$</span> npm run web   <span class="dim"># dashboard on localhost:4777</span></code></pre>
     <div class="cta__actions">
-      <a href={site.repo} class="btn btn--primary" target="_blank" rel="noopener">Star on GitHub</a>
-      <a href={site.links.docs} class="btn btn--ghost" target="_blank" rel="noopener">Read the docs</a>
+      <a
+        href={site.repo}
+        class="btn btn--primary"
+        target="_blank"
+        rel="noopener"
+        data-track="click_github"
+        data-track-location="cta"
+        data-track-target="repo">Star on GitHub</a
+      >
+      <a
+        href={site.links.docs}
+        class="btn btn--ghost"
+        target="_blank"
+        rel="noopener"
+        data-track="click_docs"
+        data-track-location="cta"
+        data-track-doc="readme">Read the docs</a
+      >
     </div>
   </div>
 </section>

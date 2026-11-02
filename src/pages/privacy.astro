@@ -5,7 +5,7 @@ import Footer from '../components/Footer.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 import { site } from '../data/site';
 
-const updated = '20 October 2026';
+const updated = '22 October 2026';
 ---
 
 <Base title="Privacy — Duskfleet" description="What the Duskfleet website collects, and how to change your cookie choice.">
@@ -41,13 +41,33 @@ const updated = '20 October 2026';
           <p>
             If you accept, we load Google Analytics 4 to learn how many people visit, which pages they
             read and where they come from. It sets the <code>_ga</code> and <code>_ga_*</code> cookies
-            (kept for up to two years) and sends page views, scrolls and outbound clicks to Google with
-            IP anonymisation on. Advertising storage and personalisation stay off. Google processes this
-            data on our behalf; see
+            (kept for up to two years) and sends page views, scrolls and outbound clicks to Google.
+            GA4 does not log or store IP addresses; they are used only to derive coarse location and then
+            discarded. Advertising storage and personalisation stay off. Event data is kept for 14 months.
+            Google processes this data on our behalf; see
             <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's privacy policy</a>.
           </p>
           <p>
-            If you reject, or make no choice, nothing is loaded and no analytics cookie is set.
+            Besides those, the site sends a few events of its own, so we can tell which links and answers
+            are useful. Every value comes from a fixed list in the site's code: no free text, no addresses,
+            nothing about you.
+          </p>
+          <ul>
+            <li><code>click_install_cta</code>: an Install button was clicked (hero or navigation).</li>
+            <li>
+              <code>click_github</code>: a link to GitHub was clicked, with where it sits on the page and
+              whether it leads to the repository, the releases or the license.
+            </li>
+            <li>
+              <code>click_docs</code>: a documentation link was clicked, with where it sits and which
+              document it opens.
+            </li>
+            <li><code>faq_open</code>: an FAQ answer was opened, with a short id of the question.</li>
+            <li><code>view_section</code>: a section of the home page came into view, once per visit.</li>
+          </ul>
+          <p>
+            Nothing loads before you choose Accept. If you reject, or make no choice, nothing is loaded,
+            no event is sent and no analytics cookie is set.
           </p>
           <p>
             <button type="button" id="change-consent" class="btn btn--ghost">Change your cookie choice</button>
@@ -104,6 +124,17 @@ const updated = '20 October 2026';
 
   .privacy p {
     margin-top: 12px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .privacy ul {
+    margin-top: var(--space-3);
+    padding-left: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
     color: var(--muted);
     font-size: 16px;
     line-height: 26px;
