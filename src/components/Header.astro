@@ -9,7 +9,7 @@ const url = (href: string) => (href.startsWith('#') ? home + href : href.startsW
 <header class="header">
   <div class="container header__inner">
     <a href={home + '#top'} class="logo" aria-label="Duskfleet, back to top">
-      <Lockup />
+      <Lockup size={29.4} />
     </a>
     <nav class="nav" aria-label="Site">
       {
@@ -43,7 +43,8 @@ const url = (href: string) => (href.startsWith('#') ? home + href : href.startsW
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 76px;
+    /* The row is as tall as the 70 % lockup (48.11 px, DS-20); the padding keeps the sticky bar at 76 px. */
+    padding-block: 14px;
   }
 
   .logo {
@@ -55,6 +56,9 @@ const url = (href: string) => (href.startsWith('#') ? home + href : href.startsW
     display: flex;
     align-items: center;
     gap: 4px;
+    /* Menu centre line sits 5.22 px below the lockup centre, on the wordmark's x-height band.
+       A transform, not a margin, so the row does not grow past the lockup height. */
+    transform: translateY(5.22px);
   }
 
   .nav__link {

@@ -5,33 +5,44 @@
  * "fleet" carries the same sunset gradient as a text fill.
  * It is a logotype with the accessible name "Duskfleet"; a link wrapping it still needs
  * its own label.
+ *
+ * `size` is the wordmark font-size in px. Everything else follows from it (DS-20, Figma 2617:189):
+ * the mark box is size x 18/11 (22 -> 36, 29.4 -> 48.11), the line-height is 1.5, and the
+ * hull-to-wordmark distance stays 6.8 px whatever the size (the D ends 4.8 units inside its
+ * 36-unit box, so the box-to-text gap is 6.8 - 4.8 x mark / 36).
  */
 import mark from '../assets/icons/mark.svg';
+
+interface Props {
+  size?: number;
+}
+
+const { size = 22 } = Astro.props;
 ---
 
-<span class="lockup" role="img" aria-label="Duskfleet">
+<span class="lockup" role="img" aria-label="Duskfleet" style={`--lockup-size: ${size}px`}>
   <img class="lockup__mark" src={mark.src} width="36" height="36" alt="" />
   <span class="lockup__word" aria-hidden="true"><span>dusk</span><span class="lockup__fleet">fleet</span></span>
 </span>
 
 <style>
   .lockup {
+    --lockup-mark: calc(var(--lockup-size) * 18 / 11);
     display: inline-flex;
     align-items: center;
-    /* The D ends 4.8 px inside its 36 px box: 2 px here gives the 7 px mark-to-wordmark gap of the frame. */
-    gap: 2px;
+    gap: calc(6.8px - var(--lockup-mark) * 4.8 / 36);
   }
 
   .lockup__mark {
-    width: 36px;
-    height: 36px;
+    width: var(--lockup-mark);
+    height: var(--lockup-mark);
   }
 
   .lockup__word {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 22px;
-    line-height: 33px;
+    font-size: var(--lockup-size);
+    line-height: 1.5;
     letter-spacing: -0.02em;
     color: var(--text);
     white-space: nowrap;
