@@ -16,9 +16,9 @@ import InstallBlock from './InstallBlock.astro';
         Duskfleet runs Claude Code agents (claude -p) in your local projects, on demand or on a cron
         schedule, records every run in SQLite and shows it in a dashboard on localhost.
       </p>
-      <InstallBlock />
+      <InstallBlock command="npx duskfleet init" />
       <div class="hero__actions">
-        <a href="#start" class="btn btn--primary" data-track="click_install_cta" data-track-location="hero">Install the local version</a>
+        <a href="#start" class="btn btn--primary" data-track="click_install_cta" data-track-location="hero">Get started</a>
         <a
           href={site.repo}
           class="btn btn--ghost"
