@@ -1,0 +1,222 @@
+---
+/**
+ * Install block with a Copy button (DS-26, Figma InstallBlock 3612:2205 and CopyButton 3612:2184).
+ * Desktop: one 440 px row, command left, button right. Mobile (≤ 640 px): command on top,
+ * button full width below. The "$" prompt is decorative: it is hidden from assistive tech,
+ * not selectable and never copied; the clipboard receives exactly `command`.
+ * The inline script is the only behaviour CSS cannot do (Clipboard API); if the API is missing
+ * or rejects, the button stays in its Default state and nothing claims success.
+ */
+interface Props {
+  command?: string;
+}
+
+const { command = 'npx duskfleet' } = Astro.props;
+---
+
+<div class="install">
+  <p class="install__command">
+    <span class="install__prompt" aria-hidden="true">$</span>
+    <code class="install__code">{command}</code>
+  </p>
+  <button type="button" class="copy" aria-label="Copy install command" data-copy={command}>
+    <span class="copy__face copy__face--idle">
+      <svg class="copy__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <rect class="copy__back" x="6" y="1" width="9" height="9" rx="2"></rect>
+        <rect class="copy__front" x="1" y="6" width="9" height="9" rx="2"></rect>
+      </svg>
+      Copy
+    </span>
+    <span class="copy__face copy__face--done">
+      <svg class="copy__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <path class="copy__check" d="M2.5 8.5 6.5 12.5 13.5 4"></path>
+      </svg>
+      Copied
+    </span>
+  </button>
+  <span class="sr-only" aria-live="polite" data-copy-status></span>
+</div>
+
+<script is:inline>
+  (function () {
+    var buttons = document.querySelectorAll('.copy[data-copy]');
+    Array.prototype.forEach.call(buttons, function (btn) {
+      var status = btn.parentNode.querySelector('[data-copy-status]');
+      var timer;
+      btn.addEventListener('click', function () {
+        var clip = navigator.clipboard;
+        if (!clip || typeof clip.writeText !== 'function') return;
+        clip.writeText(btn.getAttribute('data-copy')).then(
+          function () {
+            clearTimeout(timer);
+            btn.setAttribute('data-copied', '');
+            if (status) status.textContent = 'Copied';
+            timer = setTimeout(function () {
+              btn.removeAttribute('data-copied');
+              if (status) status.textContent = '';
+            }, 2000);
+          },
+          function () {}
+        );
+      });
+    });
+  })();
+</script>
+
+<style>
+  /*
+   * Unbound Figma geometry (no variable in the file): button radius 8, ring slot 3
+   * (2 px ring + 1 px gap), block padding 6 / 6 / 6 / 20 (mobile 14). The block radius, 14 in
+   * both layouts, is concentric with the desktop button: 8 + 6.
+   */
+  .install {
+    --copy-radius: 8px;
+    --install-pad: 6px;
+    --install-radius: calc(var(--copy-radius) + 6px);
+
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    width: 100%;
+    max-width: 440px;
+    padding: var(--install-pad) var(--install-pad) var(--install-pad) var(--space-5);
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--install-radius);
+  }
+
+  /* IBM Plex Mono 16/24 (no text style: typography/code is 13 px) */
+  .install__command {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    line-height: 24px;
+    white-space: nowrap;
+  }
+
+  .install__prompt {
+    color: var(--muted);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .install__code {
+    font-family: inherit;
+    color: var(--text);
+  }
+
+  /* CopyButton: 106 × 42 face inside a 3 px ring slot, 112 px wide in total. */
+  .copy {
+    --copy-ground: var(--panel);
+
+    display: inline-grid;
+    flex: 0 0 auto;
+    width: 106px;
+    margin: 3px;
+    padding: 9px 14px;
+    background: transparent;
+    border: 1px solid var(--muted);
+    border-radius: var(--copy-radius);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 22px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+  }
+
+  .copy:hover {
+    --copy-ground: var(--border);
+
+    background: var(--border);
+    border-color: var(--text);
+  }
+
+  /* Focus: Default plus a 2 px orange ring with a 1 px gap, keyboard only. */
+  .copy:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    border-radius: var(--copy-radius);
+  }
+
+  .copy[data-copied],
+  .copy[data-copied]:hover {
+    --copy-ground: var(--panel);
+
+    background: transparent;
+    border-color: var(--ok);
+    color: var(--ok);
+  }
+
+  /* Both faces share one grid cell, so the width never changes between Copy and Copied. */
+  .copy__face {
+    grid-area: 1 / 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+  }
+
+  .copy__face--done,
+  .copy[data-copied] .copy__face--idle {
+    visibility: hidden;
+  }
+
+  .copy[data-copied] .copy__face--done {
+    visibility: visible;
+  }
+
+  .copy__icon {
+    flex: 0 0 auto;
+    fill: none;
+    stroke: currentColor;
+  }
+
+  .copy__back,
+  .copy__front {
+    stroke-width: 1.5;
+  }
+
+  .copy__front {
+    fill: var(--copy-ground);
+  }
+
+  .copy__check {
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .copy {
+      transition: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .install {
+      --install-pad: 14px;
+
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-3);
+      max-width: none;
+      padding: var(--install-pad);
+    }
+
+    .install__command {
+      padding-left: 6px;
+    }
+
+    .copy {
+      width: auto;
+    }
+  }
+</style>

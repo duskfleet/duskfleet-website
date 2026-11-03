@@ -3,7 +3,8 @@
 Landing page for [DuskFleet](https://github.com/duskfleet/duskfleet), built from the Figma
 design (`DuskFleet` file, frame **Landing**).
 
-Static site on [Astro](https://astro.build): no client-side JavaScript, self-hosted fonts
+Static site on [Astro](https://astro.build): no client-side JavaScript beyond small inline
+scripts (consent / GA4 loader, the install command's Copy button), self-hosted fonts
 (Outfit, IBM Plex Sans, IBM Plex Mono via Fontsource), design tokens as CSS custom properties.
 
 ## Develop
