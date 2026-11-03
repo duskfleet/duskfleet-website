@@ -2,7 +2,8 @@
 
 Public landing page of [DuskFleet](https://github.com/duskfleet/duskfleet), served at
 duskfleet.com from GitHub Pages. Static [Astro 5](https://astro.build) site: no framework
-islands, no client-side JavaScript beyond the inline consent / GA4 loader, self-hosted fonts,
+islands, no client-side JavaScript beyond the inline consent / GA4 loader and the Copy button of
+the install block, self-hosted fonts,
 design tokens as CSS custom properties. The design source of truth is the `DuskFleet` Figma
 file (key `bvAOGygh7yzjmTRLj7gFIp`): frame **Landing** (`25:2`) and the components an issue
 names. Product code lives in the `duskfleet/duskfleet` repository, not here.
@@ -46,7 +47,7 @@ scripts/              check-public.mjs, pr-worktree.sh (worktree under .claude/w
   name it after the Figma variable. No hard-coded hex values in components.
 - **Keep it static.** No UI framework, no component library, no new runtime dependency without
   a reason stated in the PR. Client JavaScript only for behaviour that cannot be CSS (today:
-  consent and the GA4 loader). Fonts are Fontsource packages imported in `Base.astro`.
+  consent, the GA4 loader and the clipboard write of `InstallBlock`). Fonts are Fontsource packages imported in `Base.astro`.
 - **Consent first.** GA4 loads only after an explicit Accept (`window.duskfleetConsent`,
   `localStorage` key `duskfleet-consent`); Reject or no choice loads nothing and sets no
   analytics cookie. An empty `gaId` disables analytics. Never add a third-party script that

@@ -1,9 +1,11 @@
 ---
 /**
- * Hero (Figma Hero/Desktop 196:8, Hero/Mobile 196:37).
- * The H1 is the primary tagline; the demo card always carries its "example data" pill.
+ * Hero (Figma Hero/Desktop 918:311, Hero/Mobile 918:340).
+ * The H1 is the primary tagline; the install block (DS-26) sits under the lead;
+ * the demo card always carries its "example data" pill.
  */
 import { site } from '../data/site';
+import InstallBlock from './InstallBlock.astro';
 ---
 
 <section id="top" class="hero" data-track-section="hero">
@@ -14,6 +16,7 @@ import { site } from '../data/site';
         Duskfleet runs Claude Code agents (claude -p) in your local projects, on demand or on a cron
         schedule, records every run in SQLite and shows it in a dashboard on localhost.
       </p>
+      <InstallBlock />
       <div class="hero__actions">
         <a href="#start" class="btn btn--primary" data-track="click_install_cta" data-track-location="hero">Install the local version</a>
         <a
