@@ -119,15 +119,43 @@ const structuredData =
           s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
           document.head.appendChild(s);
         }
+        /* Reject after Accept: stop a gtag already in the page from sending
+           for the rest of the session and delete the _ga / _ga_* cookies it
+           set, with no domain and for every parent domain of the host
+           (GA4 writes them on the highest settable one, e.g. .duskfleet.com). */
+        function clearAnalytics() {
+          if (gaId) window['ga-disable-' + gaId] = true;
+          var names = document.cookie.split(';').map(function (c) {
+            return c.split('=')[0].trim();
+          }).filter(function (n) { return n.indexOf('_ga') === 0; });
+          if (!names.length) return;
+          var labels = location.hostname.split('.');
+          var domains = [''];
+          for (var i = 0; i < labels.length - 1; i++) {
+            domains.push('; domain=.' + labels.slice(i).join('.'));
+          }
+          names.forEach(function (n) {
+            domains.forEach(function (d) {
+              document.cookie = n + '=; Max-Age=0; path=/' + d;
+            });
+          });
+        }
         window.duskfleetConsent = {
           get: read,
           set: function (value) {
             try { localStorage.setItem(KEY, value); } catch (e) {}
-            if (value === 'accepted') loadAnalytics();
+            if (value === 'accepted') {
+              if (gaId) window['ga-disable-' + gaId] = false;
+              if (loaded && window.gtag) window.gtag('config', gaId);
+              loadAnalytics();
+            }
+            if (value === 'rejected') clearAnalytics();
             document.dispatchEvent(new CustomEvent('duskfleet:consent', { detail: value }));
           },
         };
-        if (read() === 'accepted') loadAnalytics();
+        var stored = read();
+        if (stored === 'accepted') loadAnalytics();
+        if (stored === 'rejected') clearAnalytics();
       })();
     </script>
     <script is:inline>
