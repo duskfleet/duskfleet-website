@@ -15,8 +15,8 @@
   --run: #6fc4e8;
 
   --font-display: 'Outfit Variable', 'Outfit', system-ui, sans-serif;
-  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --radius-sm: 7px;
   --radius-md: 10px;
