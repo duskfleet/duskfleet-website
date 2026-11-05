@@ -5,6 +5,7 @@ import iconSchedules from '../assets/icons/feat-schedules.svg?raw';
 import iconRecorded from '../assets/icons/feat-recorded.svg?raw';
 import iconCost from '../assets/icons/feat-cost.svg?raw';
 import iconChat from '../assets/icons/feat-chat.svg?raw';
+import { mcpToolCount } from '../data/site';
 ---
 
 <section id="features" class="section section--alt" data-track-section="features">
@@ -59,7 +60,7 @@ import iconChat from '../assets/icons/feat-chat.svg?raw';
         <span class="card__icon" set:html={iconChat} />
         <h3 class="card__title">Chat is the control room</h3>
         <p class="card__text">
-          15 MCP tools. Create agents, start runs, set schedules and ask what happened from Claude
+          {mcpToolCount} MCP tools. Create agents, start runs, set schedules and ask what happened from Claude
           Desktop, Cowork or Claude Code.
         </p>
       </li>
