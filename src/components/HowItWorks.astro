@@ -20,7 +20,7 @@
           A Markdown file with YAML frontmatter: model, permission mode, allowed tools, budget. Or
           link an agent your project already defines.
         </p>
-        <pre class="code"><code>---
+        <pre class="code"><code class="code__scroll" tabindex="0" role="region" aria-label="Agent file example">---
 id: test-fixer
 model: sonnet
 permission_mode: acceptEdits
@@ -37,7 +37,7 @@ Fix failing tests. Never skip one.</code></pre>
           Ask Claude Desktop over MCP, type a command, or set a 5-field cron. A busy agent is
           skipped, never queued.
         </p>
-        <pre class="code"><code><span class="dim">$</span> duskfleet run \
+        <pre class="code"><code class="code__scroll" tabindex="0" role="region" aria-label="Launch command example"><span class="dim">$</span> duskfleet run \
     --project app --agent test-fixer \
     --model haiku -- "Fix the failing test"
 
@@ -53,11 +53,13 @@ Fix failing tests. Never skip one.</code></pre>
           the cost, and resumes the session with one command.
         </p>
         <div class="code log">
-          <div class="log__row"><span class="dim">00:00</span><span>Read package.json</span></div>
-          <div class="log__row"><span class="dim">00:04</span><span>Bash npm test</span></div>
-          <div class="log__row"><span class="dim">00:41</span><span>Edit src/cron.ts</span></div>
-          <div class="log__row"><span class="dim">01:02</span><span class="log__amber">Bash git push · denied</span></div>
-          <div class="log__row"><span class="dim">01:03</span><span class="log__ok">result · $0.11 · 6 turns</span></div>
+          <div class="code__scroll log__rows" tabindex="0" role="region" aria-label="Run log example">
+            <div class="log__row"><span class="dim">00:00</span><span>Read package.json</span></div>
+            <div class="log__row"><span class="dim">00:04</span><span>Bash npm test</span></div>
+            <div class="log__row"><span class="dim">00:41</span><span>Edit src/cron.ts</span></div>
+            <div class="log__row"><span class="dim">01:02</span><span class="log__amber">Bash git push · denied</span></div>
+            <div class="log__row"><span class="dim">01:03</span><span class="log__ok">result · $0.11 · 6 turns</span></div>
+          </div>
         </div>
       </li>
     </ol>
@@ -107,15 +109,18 @@ Fix failing tests. Never skip one.</code></pre>
 
   .step .code {
     margin-top: 14px;
-    overflow: hidden;
   }
 
   .log {
+    padding: 12px 14px 13px;
+    line-height: 19px;
+    white-space: normal;
+  }
+
+  .log__rows {
     display: flex;
     flex-direction: column;
     gap: 7.5px;
-    padding: 12px 14px 13px;
-    line-height: 19px;
   }
 
   .log__row {
