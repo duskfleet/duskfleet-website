@@ -12,7 +12,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <aside id="cookie-banner" class="cookie" aria-label="Cookie consent" hidden>
   <p class="cookie__copy">
-    We use analytics cookies to understand how Duskfleet is used.
+    We use analytics cookies<span class="cookie__more"> to understand how Duskfleet is used</span>.
     <a class="cookie__link" href={base + site.links.privacy}>Privacy</a>
   </p>
   <div class="cookie__actions">
@@ -107,30 +107,42 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     border-radius: var(--radius-card);
   }
 
+  /* Under 640 px (#32): a compact card, one line of copy with the Privacy link inline and
+     Accept / Reject side by side, about 100 px tall instead of about 240 px. */
   @media (max-width: 640px) {
     .cookie {
       inset: auto var(--space-4) var(--space-4) var(--space-4);
       flex-direction: column;
       align-items: stretch;
-      gap: var(--space-4);
-      padding: var(--space-4);
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-4);
       border: 1px solid var(--accent);
       border-radius: var(--radius-card);
     }
 
-    .cookie__link {
-      display: block;
-      width: fit-content;
-      margin: var(--space-2) 0 0;
-    }
-
-    .cookie__actions {
-      flex-direction: column;
-      gap: var(--space-3);
+    .cookie__more {
+      display: none;
     }
 
     .cookie__btn {
-      width: 100%;
+      flex: 1 1 0;
+      min-width: 0;
+      padding: 0 var(--space-3);
+    }
+
+    /* While the banner is open, reserve its height (borders, padding, one 15 px line, gap,
+       touch-min buttons, bottom inset) plus one inset of air at the end of the page, and keep
+       focused or anchored elements clear of it, so it never covers an interactive element. */
+    :global(html:has(#cookie-banner:not([hidden]))) {
+      scroll-padding-bottom: calc(
+        2px + 2 * var(--space-3) + 15px * 1.45 + var(--space-2) + var(--touch-min) + 2 * var(--space-4)
+      );
+    }
+
+    :global(body:has(#cookie-banner:not([hidden]))) {
+      padding-bottom: calc(
+        2px + 2 * var(--space-3) + 15px * 1.45 + var(--space-2) + var(--touch-min) + 2 * var(--space-4)
+      );
     }
   }
 </style>
