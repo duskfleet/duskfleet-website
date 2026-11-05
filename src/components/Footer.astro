@@ -107,10 +107,16 @@ const url = (href: string) => (href.startsWith('#') ? `${base}/${href}` : href.s
     margin: 8px 0 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    align-items: flex-start;
+    /* Links are 24 px targets instead of 21 px text boxes (WCAG 2.5.8, #34); the gap gives back
+       the 3 px so the 29 px pitch of the frame is unchanged. */
+    gap: calc(var(--space-2) - (var(--space-6) - 21px));
   }
 
   .footer__col a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--space-6);
     font-size: 14px;
     line-height: 21px;
     color: var(--muted);
@@ -119,5 +125,17 @@ const url = (href: string) => (href.startsWith('#') ? `${base}/${href}` : href.s
 
   .footer__col a:hover {
     color: var(--text);
+  }
+
+  /* On touch screens each link is a full 44 px row; the text size stays the same. */
+  @media (pointer: coarse) {
+    .footer__col ul {
+      margin-top: 0;
+      gap: 0;
+    }
+
+    .footer__col a {
+      min-height: var(--touch-min);
+    }
   }
 </style>
