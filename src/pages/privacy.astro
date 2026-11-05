@@ -67,7 +67,8 @@ const updated = '22 October 2026';
           </ul>
           <p>
             Nothing loads before you choose Accept. If you reject, or make no choice, nothing is loaded,
-            no event is sent and no analytics cookie is set.
+            no event is sent and no analytics cookie is set. If you accepted and later reject, the site
+            stops sending at once and deletes the <code>_ga</code> and <code>_ga_*</code> cookies.
           </p>
           <p>
             <button type="button" id="change-consent" class="btn btn--ghost">Change your cookie choice</button>
