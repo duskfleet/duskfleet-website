@@ -127,8 +127,78 @@
   font-size: 12.5px;
   line-height: 19.5px;
   color: var(--text);
-  overflow-x: auto;
+  overflow: hidden;
   white-space: pre;
+}
+
+/*
+ * The scroller sits inside the framed block, so the edge cue never fades the border, the
+ * padding or the focus ring. Every command block puts its content in one `.code__scroll`
+ * (tabindex="0", role="region" and a label, so the scroll works from the keyboard).
+ */
+.code__scroll {
+  --code-cue: 2.5em;
+
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.code__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* The frame shows the ring; the scroller's own outline would be cut by the mask. */
+.code__scroll:focus-visible {
+  outline: none;
+}
+
+.code:has(.code__scroll:focus-visible) {
+  outline: 2px solid var(--sunset-amber);
+  outline-offset: 3px;
+}
+
+/*
+ * Scroll cue: the right edge of the text fades out while more content lies to the right.
+ * A scroll-driven animation runs only when the block overflows (no overflow, no timeline,
+ * no fade) and the fade shrinks to nothing as the end comes into view.
+ */
+@property --code-fade {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes code-fade {
+  from {
+    --code-fade: var(--code-cue);
+  }
+  to {
+    --code-fade: 0px;
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .code__scroll {
+    -webkit-mask-image: linear-gradient(to left, transparent, var(--bg) var(--code-fade));
+    mask-image: linear-gradient(to left, transparent, var(--bg) var(--code-fade));
+    animation: code-fade linear both;
+    animation-timeline: scroll(self inline);
+  }
+}
+
+/*
+ * Without scroll timelines: a scroll shadow on the right edge. The cover travels with the
+ * content and hides the shadow once the end is reached, or from the start if nothing overflows.
+ */
+@supports not (animation-timeline: scroll()) {
+  .code__scroll {
+    background:
+      linear-gradient(to left, var(--bg) 30%, transparent) right center / var(--code-cue) 100% no-repeat local,
+      linear-gradient(to left, color-mix(in srgb, var(--faint) 45%, transparent), transparent) right center / 1em 100% no-repeat scroll;
+  }
 }
 
 .code .dim {
