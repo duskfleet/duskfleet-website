@@ -23,7 +23,10 @@ npm run check      # astro check (types + templates)
 The choice is stored in `localStorage` under `duskfleet-consent` (`accepted` | `rejected`) and
 exposed as `window.duskfleetConsent` (`get()`, `set(value)`, event `duskfleet:consent`).
 GA4 (`gaId` in `src/data/site.ts`) loads only after Accept; with Reject or no choice, no analytics
-script loads and no analytics cookie is set. An empty `gaId` disables analytics entirely.
+script loads and no analytics cookie is set. Rejecting after an Accept sets
+`window['ga-disable-<gaId>']` so a gtag already loaded stops sending, and deletes every `_ga*`
+cookie for the host and its parent domains (also on later page loads while the choice is
+`rejected`). An empty `gaId` disables analytics entirely.
 
 ## Structure
 
