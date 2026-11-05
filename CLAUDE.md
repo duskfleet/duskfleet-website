@@ -34,7 +34,8 @@ src/
   components/         one component per landing section, plus CookieBanner
   assets/icons/       SVGs exported from Figma
   pages/              index.astro (sections in Figma order), privacy.astro, 404.astro (noindex),
-                      og.png.ts, sitemap-index.xml.ts + sitemap-0.xml.ts (every page, trailing slash)
+                      og.png.ts, favicon.ico.ts (16/32/48 px from favicon.svg),
+                      sitemap-index.xml.ts + sitemap-0.xml.ts (every page, trailing slash)
 public/               CNAME, favicon.svg, robots.txt (names the sitemap index)
 scripts/              check-public.mjs, pr-worktree.sh (worktree under .claude/worktrees/),
                       issue-plan.mjs (JSON snapshot of the issue flow for the planner agent)
