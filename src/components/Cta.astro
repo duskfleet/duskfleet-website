@@ -7,8 +7,8 @@ import { site } from '../data/site';
   <div class="container cta__inner">
     <span class="cta__mark" set:html={markLarge} />
     <h2 class="cta__title">Launch a fleet in four commands.</h2>
-    <!-- Long lines scroll horizontally: the block is focusable so the scroll works from the keyboard. -->
-    <pre class="code cta__code" tabindex="0" aria-label="Quick start commands"><code><span class="dim">$</span> npx duskfleet init
+    <!-- Long lines scroll horizontally: the scroller is focusable so the scroll works from the keyboard. -->
+    <pre class="code cta__code"><code class="code__scroll" tabindex="0" role="region" aria-label="Quick start commands"><span class="dim">$</span> npx duskfleet init
 <span class="dim">$</span> npx duskfleet agents create fixer --model haiku -- "You fix the failing test in this project. Run the tests, read the failure, change the minimum code, run them again. No git, no installs."
 <span class="dim">$</span> npx duskfleet run --project /path/to/project --agent fixer -- "Fix the failing test"
 <span class="dim">$</span> npx duskfleet dashboard    <span class="dim"># http://localhost:4777</span></code></pre>
