@@ -104,9 +104,12 @@ export const costRows = [
 
 export const costTotal = { model: 'All models', runs: '274', avg: '', total: '$32.74' };
 
+// Number of tools the DuskFleet MCP server registers: used by the Features copy and the stats row.
+export const mcpToolCount = 19;
+
 export const stats = [
   { value: '3', label: 'runtime dependencies' },
-  { value: '15', label: 'MCP tools' },
+  { value: String(mcpToolCount), label: 'MCP tools' },
   { value: '0', label: 'accounts to create' },
   { value: 'MIT', label: 'license, public repo' },
 ];
