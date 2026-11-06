@@ -7,11 +7,29 @@ import { site } from '../data/site';
   <div class="container cta__inner">
     <span class="cta__mark" set:html={markLarge} />
     <h2 class="cta__title">Launch a fleet in four commands.</h2>
-    <!-- Long lines scroll horizontally: the scroller is focusable so the scroll works from the keyboard. -->
-    <pre class="code cta__code"><code class="code__scroll" tabindex="0" role="region" aria-label="Quick start commands"><span class="dim">$</span> npx duskfleet init
-<span class="dim">$</span> npx duskfleet agents create fixer --model haiku -- "You fix the failing test in this project. Run the tests, read the failure, change the minimum code, run them again. No git, no installs."
-<span class="dim">$</span> npx duskfleet run --project /path/to/project --agent fixer -- "Fix the failing test"
-<span class="dim">$</span> npx duskfleet dashboard    <span class="dim"># http://localhost:4777</span></code></pre>
+    <!--
+      Commands wrap with shell line continuations: no line is longer than 40 characters, so the
+      block fits at 1280 px and at 390 px without a sideways scroll (the scroller stays as a
+      fallback for narrower screens, focusable so it works from the keyboard). Inside the quoted
+      prompt the continuation lines start at column 0: an indent would add spaces to the prompt.
+      The `$` prompts and the comment are not selectable, so a copied selection is the four
+      commands alone (zsh without interactivecomments would reject a pasted `#` line).
+    -->
+    <pre class="code cta__code"><code class="code__scroll" tabindex="0" role="region" aria-label="Quick start commands"><span class="dim cta__nocopy">$ </span>npx duskfleet init
+<span class="dim cta__nocopy">$ </span>npx duskfleet agents create fixer \
+    --model haiku --budget 0.25 -- \
+    "You fix the failing test in this \
+project. Use the Read, Glob and Grep \
+tools to look at files; use Bash only \
+to run npm test. Run the tests, read \
+the failure, change the minimum code, \
+run them again. No git, no installs."
+<span class="dim cta__nocopy">$ </span>npx duskfleet run \
+    --project /path/to/project \
+    --agent fixer -- \
+    "Fix the failing test"
+<span class="dim cta__nocopy"># open the dashboard to watch the run</span>
+<span class="dim cta__nocopy">$ </span>npx duskfleet dashboard</code></pre>
     <p class="cta__source">
       Contributors can also
       <a href={`${site.repo}#from-source`} target="_blank" rel="noopener">build from source</a>
@@ -77,6 +95,11 @@ import { site } from '../data/site';
     border-radius: 12px;
   }
 
+  .cta__nocopy {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
   .cta__source {
     margin-top: var(--space-3);
     font-size: 14px;
@@ -110,6 +133,14 @@ import { site } from '../data/site';
     .cta__title {
       font-size: 32px;
       line-height: 36px;
+    }
+
+    /* 40 characters at 12.5px Geist Mono (0.6em advance) take 300px: they fit the 316px
+       inside a 390px viewport (20px gutters, 16px padding, 1px border). */
+    .cta__code {
+      padding: var(--space-4);
+      font-size: 12.5px;
+      line-height: 19.5px;
     }
   }
 </style>
