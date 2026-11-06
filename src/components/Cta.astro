@@ -28,7 +28,7 @@ run them again. No git, no installs."
     --project /path/to/project \
     --agent fixer -- \
     "Fix the failing test"
-<span class="dim cta__nocopy"># open the dashboard to watch the run</span>
+<span class="cta__comment cta__nocopy"># open the dashboard to watch the run</span>
 <span class="dim cta__nocopy">$ </span>npx duskfleet dashboard</code></pre>
     <p class="cta__source">
       Contributors can also
@@ -98,6 +98,12 @@ run them again. No git, no installs."
   .cta__nocopy {
     -webkit-user-select: none;
     user-select: none;
+  }
+
+  /* Instruction text, not decoration: the muted token keeps it above 4.5:1 on the code
+     background (the faint token of the `$` prompts is about 3.7:1). */
+  .cta__comment {
+    color: var(--muted);
   }
 
   .cta__source {
