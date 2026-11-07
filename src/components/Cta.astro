@@ -6,30 +6,20 @@ import { site } from '../data/site';
 <section id="start" class="section cta" data-track-section="cta">
   <div class="container cta__inner">
     <span class="cta__mark" set:html={markLarge} />
-    <h2 class="cta__title">Launch a fleet in four commands.</h2>
+    <h2 class="cta__title">Two commands, then Claude Code.</h2>
     <!--
-      Commands wrap with shell line continuations: no line is longer than 40 characters, so the
-      block fits at 1280 px and at 390 px without a sideways scroll (the scroller stays as a
-      fallback for narrower screens, focusable so it works from the keyboard). Inside the quoted
-      prompt the continuation lines start at column 0: an indent would add spaces to the prompt.
-      The `$` prompts and the comment are not selectable, so a copied selection is the four
-      commands alone (zsh without interactivecomments would reject a pasted `#` line).
+      The terminal only starts the fleet: the longest line is 25 characters, so the block fits
+      at 1280 px and at 390 px without a sideways scroll (the scroller stays as a fallback for
+      narrower screens, focusable so it works from the keyboard). The `$` prompts are not
+      selectable, so a copied selection is the two commands alone. Agents, runs and schedules
+      are then managed from Claude Code through the MCP server, not from the CLI.
     -->
     <pre class="code cta__code"><code class="code__scroll" tabindex="0" role="region" aria-label="Quick start commands"><span class="dim cta__nocopy">$ </span>npx duskfleet init
-<span class="dim cta__nocopy">$ </span>npx duskfleet agents create fixer \
-    --model haiku --budget 0.25 -- \
-    "You fix the failing test in this \
-project. Use the Read, Glob and Grep \
-tools to look at files; use Bash only \
-to run npm test. Run the tests, read \
-the failure, change the minimum code, \
-run them again. No git, no installs."
-<span class="dim cta__nocopy">$ </span>npx duskfleet run \
-    --project /path/to/project \
-    --agent fixer -- \
-    "Fix the failing test"
-<span class="cta__comment cta__nocopy"># open the dashboard to watch the run</span>
 <span class="dim cta__nocopy">$ </span>npx duskfleet dashboard</code></pre>
+    <p class="cta__next">
+      Then stay in Claude Code: <code>init</code> registers the MCP server, so you ask Claude Code
+      to create agents, start runs and set up schedules, and the dashboard shows them.
+    </p>
     <p class="cta__source">
       Contributors can also
       <a href={`${site.repo}#from-source`} target="_blank" rel="noopener">build from source</a>
@@ -100,10 +90,19 @@ run them again. No git, no installs."
     user-select: none;
   }
 
-  /* Instruction text, not decoration: the muted token keeps it above 4.5:1 on the code
-     background (the faint token of the `$` prompts is about 3.7:1). */
-  .cta__comment {
-    color: var(--muted);
+  /* The step after the two commands: body text in the text token, capped to the code block
+     width so it reads as its caption. */
+  .cta__next {
+    max-width: 640px;
+    margin-top: var(--space-4);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .cta__next code,
+  .cta__source code {
+    font-family: var(--font-mono);
   }
 
   .cta__source {
@@ -117,10 +116,6 @@ run them again. No git, no installs."
     color: var(--text);
     text-decoration: underline;
     text-underline-offset: 2px;
-  }
-
-  .cta__source code {
-    font-family: var(--font-mono);
   }
 
   .cta__actions {
@@ -141,8 +136,8 @@ run them again. No git, no installs."
       line-height: 36px;
     }
 
-    /* 40 characters at 12.5px Geist Mono (0.6em advance) take 300px: they fit the 316px
-       inside a 390px viewport (20px gutters, 16px padding, 1px border). */
+    /* 25 characters at 12.5px Geist Mono (0.6em advance) take about 190px, well inside the
+       316px of a 390px viewport (20px gutters, 16px padding, 1px border). */
     .cta__code {
       padding: var(--space-4);
       font-size: 12.5px;
