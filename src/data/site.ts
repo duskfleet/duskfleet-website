@@ -92,7 +92,7 @@ export const week: { day: string; tick: Tick }[] = [
 export const weekLegend: { tick: Tick; label: string }[] = [
   { tick: 'ok', label: 'ran clean' },
   { tick: 'review', label: 'needs review' },
-  { tick: 'skipped', label: 'skipped, agent busy' },
+  { tick: 'skipped', label: 'skipped, busy until the next tick' },
   { tick: 'next', label: 'next' },
 ];
 
@@ -134,7 +134,7 @@ export const faq = [
   {
     id: 'overlap',
     q: 'What happens if two schedules fire on the same project?',
-    a: 'One run per project and one per agent at a time. The second tick is recorded as skipped, never queued.',
+    a: 'One run per project and one per agent at a time. The second tick is deferred, not queued: one pending fire, retried until the project is free or its next occurrence comes.',
   },
   {
     id: 'other-clis',

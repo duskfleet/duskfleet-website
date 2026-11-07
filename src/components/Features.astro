@@ -34,10 +34,11 @@ import { mcpToolCount } from '../data/site';
       </li>
       <li class="card panel">
         <span class="card__icon" set:html={iconSchedules} />
-        <h3 class="card__title">Schedules that skip, never queue</h3>
+        <h3 class="card__title">Schedules that defer, never queue</h3>
         <p class="card__text">
-          Plain cron, DST-safe, no dependency. If the agent is busy the tick is marked skipped. No
-          catch-up storms when the laptop wakes.
+          Plain cron, DST-safe, no dependency. If the agent is busy the tick is kept as one pending
+          fire and retried until the agent is free or the next occurrence. No catch-up storms when the
+          laptop wakes.
         </p>
       </li>
       <li class="card panel">
