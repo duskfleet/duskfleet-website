@@ -35,8 +35,8 @@ import { week, weekLegend } from '../data/site';
       <p class="eyebrow">Schedules</p>
       <h2 class="h2">Ticks keep the fleet moving.</h2>
       <p class="lead">
-        One process holds the lease and ticks the clock. A tick that finds the agent busy is written
-        down as skipped. A laptop that was asleep does not replay what it missed. One flag in the
+        One process holds the lease and ticks the clock. A tick that finds the agent busy is deferred and
+        retried, one pending fire per schedule. A laptop that was asleep does not replay what it missed. One flag in the
         config stops everything.
       </p>
     </div>

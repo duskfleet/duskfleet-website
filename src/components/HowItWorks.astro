@@ -32,17 +32,15 @@ Fix failing tests. Never skip one.</code></pre>
 
       <li class="step panel">
         <span class="step__n">02</span>
-        <h3 class="step__title">Launch from chat, CLI or cron.</h3>
+        <h3 class="step__title">Launch from Claude Code, or on a cron.</h3>
         <p class="step__text">
-          Ask Claude Desktop over MCP, type a command, or set a 5-field cron. A busy agent is
-          skipped, never queued.
+          After <code>init</code>, ask Claude Code over MCP to create the agent, run it or set a
+          5-field cron. A tick that finds the agent busy is deferred: one pending fire, retried until
+          the agent is free or the next occurrence comes.
         </p>
-        <pre class="code"><code class="code__scroll" tabindex="0" role="region" aria-label="Launch command example"><span class="dim">$</span> duskfleet run \
-    --project app --agent test-fixer \
-    --model haiku -- "Fix the failing test"
-
-<span class="dim">#</span> or, in Claude Desktop:
-<span class="mid">"run test-fixer on app every night at 2"</span></code></pre>
+        <pre class="code"><code class="code__scroll" tabindex="0" role="region" aria-label="Launch from Claude Code example"><span class="dim">#</span> in Claude Code, after npx duskfleet init:
+<span class="mid">"run test-fixer on app"</span>
+<span class="mid">"schedule test-fixer on app every night at 2"</span></code></pre>
       </li>
 
       <li class="step panel">
